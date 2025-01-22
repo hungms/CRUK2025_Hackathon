@@ -3,8 +3,8 @@ project:
   output-dir: docs
 
 book:
-  title: "2025 CRUK Hackathon"
-  description: "2025 CRUK Hackathon Scripts"
+  title: "CRUK 2025 Hackathon"
+  description: "Team10 MetaSix"
   author: "Matthew Hung"
   date: last-modified
   page-navigation: true

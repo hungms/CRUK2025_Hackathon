@@ -8,9 +8,9 @@
 
 <meta name="author" content="Matthew Hung">
 <meta name="dcterms.date" content="2025-01-22">
-<meta name="description" content="2025 CRUK Hackathon Scripts">
+<meta name="description" content="Team10 MetaSix">
 
-<title>4&nbsp; Validation in Xenium – 2025 CRUK Hackathon</title>
+<title>4&nbsp; Validation in Xenium – CRUK 2025 Hackathon</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -137,7 +137,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">2025 CRUK Hackathon</a> 
+      <a href="./">CRUK 2025 Hackathon</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/FrancisCrickInstitute/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -323,10 +323,10 @@ The following objects are masked from ‘package:base’:
 <span id="cb4-5"><a href="#cb4-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-4" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="21">
+<div id="cell-4" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">VlnPlot</span>(xenium.obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"nFeature_RNA"</span>, <span class="st">"nCount_RNA"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">VlnPlot</span>(xenium.obj, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">"nFeature_RNA"</span>, <span class="st">"nCount_RNA"</span>), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">pt.size =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rasterizing points since number of points exceeds 100,000.
@@ -335,6 +335,13 @@ To disable this behavior set `raster=FALSE`
 Rasterizing points since number of points exceeds 100,000.
 To disable this behavior set `raster=FALSE`
 </code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="xenium2_files/figure-html/cell-5-output-2.png" width="420" height="420" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="cell-5" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="4">
@@ -503,17 +510,30 @@ To disable this behavior set `raster=FALSE`
 </div>
 </div>
 </div>
-<div id="cell-19" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="19">
+<div id="cell-19" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="45">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="do">## 20 genes</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">write.table</span>(luad.genes.xenium, <span class="st">"/camp/home/hungm/scratch/hungm/matthew/MH_Hackathon/2025_CRUK/data/TCGA2/4_xenium/xenium20.txt"</span>, <span class="at">col.names =</span> F, <span class="at">row.names =</span> F, <span class="at">quote =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">tiff</span>(<span class="st">"/camp/home/hungm/scratch/hungm/matthew/MH_Hackathon/2025_CRUK/data/TCGA2/4_xenium/xenium_featureplot.tiff"</span>, <span class="at">width =</span> <span class="dv">5000</span>, <span class="at">height =</span> <span class="dv">5000</span>,<span class="at">res =</span> <span class="dv">300</span>)</span>
+<span id="cb24-2"><a href="#cb24-2"></a>colors <span class="ot">&lt;-</span> viridis<span class="sc">::</span><span class="fu">viridis</span>(<span class="dv">10</span>)</span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="fu">print</span>(</span>
+<span id="cb24-4"><a href="#cb24-4"></a>    <span class="fu">ImageFeaturePlot</span>(xenium.obj, <span class="at">fov =</span> <span class="st">"fov"</span>, <span class="at">features =</span> <span class="st">"LUADGS_UCell"</span>, <span class="at">nmols =</span> <span class="dv">20000</span>, <span class="at">cols =</span> colors))</span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<strong>png:</strong> 2
+</div>
+</div>
+<div id="cell-20" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="19">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="do">## 20 genes</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">write.table</span>(luad.genes.xenium, <span class="st">"/camp/home/hungm/scratch/hungm/matthew/MH_Hackathon/2025_CRUK/data/TCGA2/4_xenium/xenium20.txt"</span>, <span class="at">col.names =</span> F, <span class="at">row.names =</span> F, <span class="at">quote =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-20" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="18">
+<div id="cell-21" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">length</span>(luad.genes.xenium)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">length</span>(luad.genes.xenium)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 20
