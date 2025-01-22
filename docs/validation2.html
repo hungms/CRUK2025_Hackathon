@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Matthew Hung">
+<meta name="dcterms.date" content="2025-01-22">
+<meta name="description" content="2025 CRUK Hackathon Scripts">
+
+<title>5&nbsp; Validation of Xenium Genes – 2025 CRUK Hackathon</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./xenium2.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d1cbdf98a2738ec369a65716124baecb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./validation2.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Validation of Xenium Genes</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">2025 CRUK Hackathon</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/FrancisCrickInstitute/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><strong>Introduction</strong></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./metastatic_signature2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Generating Prognostic Signature</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ssgsea2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Risk Classification with ssGSEA</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./xenium2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Validation in Xenium</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validation2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Validation of Xenium Genes</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="1">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#genes" id="toc-genes" class="nav-link active" data-scroll-target="#genes"><span class="header-section-number">5.1</span> 20 genes</a></li>
+  <li><a href="#combine-ssgsea-with-survival" id="toc-combine-ssgsea-with-survival" class="nav-link" data-scroll-target="#combine-ssgsea-with-survival"><span class="header-section-number">5.2</span> Combine ssGSEA with survival</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.dev/FrancisCrickInstitute/blob/main/validation2.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Validation of Xenium Genes</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Matthew Hung </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2025-01-22</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="genes" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="genes"><span class="header-section-number">5.1</span> 20 genes</h2>
+<div id="cell-2" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="1">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>xenium.genes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"/camp/home/hungm/scratch/hungm/matthew/MH_Hackathon/2025_CRUK/data/TCGA2/4_xenium/xenium20.txt"</span>, <span class="at">header =</span> F)[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-3" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="2">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>xenium.genes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class="list-inline"><li>'ATG10'</li><li>'CUL4A'</li><li>'DAB1'</li><li>'DAOA'</li><li>'DKK1'</li><li>'EFNB2'</li><li>'GCKR'</li><li>'HSPA6'</li><li>'INSL4'</li><li>'KCNK2'</li><li>'MMP8'</li><li>'NCSTN'</li><li>'NR5A1'</li><li>'NTSR1'</li><li>'OPRM1'</li><li>'PARP1'</li><li>'PBX1'</li><li>'RILPL2'</li><li>'SCG5'</li><li>'TMEM106B'</li></ol>
+</div>
+</div>
+<div id="cell-4" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="5">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># processed on NEMO so far</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="fu">library</span>(SummarizedExperiment)</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="fu">library</span>(survival)</span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="fu">setwd</span>(<span class="st">"/camp/home/hungm/scratch/hungm/matthew/MH_Hackathon/2025_CRUK/data/TCGA2/0_raw"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="fu">source</span>(<span class="st">"/camp/home/hungm/working/Matthew/library/R/functions/coxph/coxph.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-5" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="6">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>gs <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">xenium20 =</span> xenium.genes)</span>
+<span id="cb4-2"><a href="#cb4-2"></a>write.gmt <span class="ot">&lt;-</span> <span class="cf">function</span>(genelist, file) {</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  file_conn <span class="ot">&lt;-</span> <span class="fu">file</span>(file, <span class="at">open =</span> <span class="st">"wt"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="cf">for</span> (set_name <span class="cf">in</span> <span class="fu">names</span>(genelist)) {</span>
+<span id="cb4-5"><a href="#cb4-5"></a>    line <span class="ot">&lt;-</span> <span class="fu">c</span>(set_name, set_name, genelist[[set_name]])</span>
+<span id="cb4-6"><a href="#cb4-6"></a>    <span class="fu">writeLines</span>(<span class="fu">paste</span>(line, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>), file_conn)}</span>
+<span id="cb4-7"><a href="#cb4-7"></a>  <span class="fu">close</span>(file_conn)}</span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="fu">write.gmt</span>(gs, <span class="st">"../4_xenium/xenium20.gmt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-6" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="7">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(ssGSEA2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-7" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="8">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>res <span class="ot">=</span> <span class="fu">run_ssGSEA2</span>(</span>
+<span id="cb6-2"><a href="#cb6-2"></a>    <span class="st">"../1_processed/TCGA_lung_gex.gct"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="at">output.prefix =</span> <span class="st">"ssGSEA"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>    <span class="at">gene.set.databases =</span> <span class="st">"../4_xenium/xenium20.gmt"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5"></a>    <span class="at">output.directory =</span> <span class="st">"../4_xenium/ssGSEA_validation/"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>    <span class="at">sample.norm.type =</span> <span class="st">"none"</span>, </span>
+<span id="cb6-7"><a href="#cb6-7"></a>    <span class="at">weight =</span> <span class="fl">0.75</span>, </span>
+<span id="cb6-8"><a href="#cb6-8"></a>    <span class="at">correl.type =</span> <span class="st">"rank"</span>, </span>
+<span id="cb6-9"><a href="#cb6-9"></a>    <span class="at">statistic =</span> <span class="st">"area.under.RES"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10"></a>    <span class="at">output.score.type =</span> <span class="st">"NES"</span>, </span>
+<span id="cb6-11"><a href="#cb6-11"></a>    <span class="at">nperm =</span> <span class="dv">1000</span>, </span>
+<span id="cb6-12"><a href="#cb6-12"></a>    <span class="at">min.overlap =</span> <span class="dv">2</span>, </span>
+<span id="cb6-13"><a href="#cb6-13"></a>    <span class="at">extended.output =</span> F, </span>
+<span id="cb6-14"><a href="#cb6-14"></a>    <span class="at">global.fdr =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-15"><a href="#cb6-15"></a>    <span class="at">log.file =</span> <span class="st">"../4_xenium/ssGSEA_validation/ssGSEA.log"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>parsing as GCT v1.2
+
+../1_processed/TCGA_lung_gex.gct 20501 rows, 1017 cols, 0 row descriptors, 0 col descriptors
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>xenium20   100 %
+main loop: 33.76148 
+Saving file to  ../4_xenium/ssGSEA_validation//signature_gct/xenium20_n1017x20.gct 
+Dimensions of matrix: [20x1017]
+Setting precision to 4
+Saved.
+[1] "Total gene sets: 1"
+[1] "Unique gene sets: 1"
+Saving file to  ../4_xenium/ssGSEA_validation//ssGSEA-scores.gct 
+Dimensions of matrix: [1x1017]
+Setting precision to 4
+Saved.
+Saving file to  ../4_xenium/ssGSEA_validation//ssGSEA-pvalues.gct 
+Dimensions of matrix: [1x1017]
+Setting precision to 4
+Saved.
+Saving file to  ../4_xenium/ssGSEA_validation//ssGSEA-fdr-pvalues.gct 
+Dimensions of matrix: [1x1017]
+Setting precision to 4
+Saved.
+Saving file to  ../4_xenium/ssGSEA_validation//ssGSEA-combined.gct 
+Dimensions of matrix: [1x1017]
+Setting precision to 4
+Saved.</code></pre>
+</div>
+</div>
+</section>
+<section id="combine-ssgsea-with-survival" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="combine-ssgsea-with-survival"><span class="header-section-number">5.2</span> Combine ssGSEA with survival</h2>
+<div id="cell-9" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="15">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>ssgsea <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../3_classification/ssGSEA-scores.gct"</span>, <span class="at">row.names =</span> <span class="dv">1</span>, <span class="at">skip =</span> <span class="dv">2</span>, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">colnames</span>(ssgsea) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">"-"</span>, <span class="fu">colnames</span>(ssgsea))</span>
+<span id="cb9-3"><a href="#cb9-3"></a>ssgsea <span class="ot">&lt;-</span> <span class="fu">t</span>(ssgsea)</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="fu">head</span>(ssgsea)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A matrix: 6 × 3 of type dbl</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">lung</th>
+<th data-quarto-table-cell-role="th" scope="col">LUSC</th>
+<th data-quarto-table-cell-role="th" scope="col">LUAD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4244</td>
+<td>8.5002</td>
+<td>6.2464</td>
+<td>5.3847</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4249</td>
+<td>7.4015</td>
+<td>6.3764</td>
+<td>5.0068</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4250</td>
+<td>8.0044</td>
+<td>6.8932</td>
+<td>5.9218</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4382</td>
+<td>7.6315</td>
+<td>6.2107</td>
+<td>5.2858</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4384</td>
+<td>8.0361</td>
+<td>6.3106</td>
+<td>6.1525</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4389</td>
+<td>7.8553</td>
+<td>6.4251</td>
+<td>5.6181</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cell-10" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="16">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>xenium20 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../4_xenium/ssGSEA_validation/ssGSEA-scores.gct"</span>, <span class="at">row.names =</span> <span class="dv">1</span>, <span class="at">skip =</span> <span class="dv">2</span>, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">colnames</span>(xenium20) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">"-"</span>, <span class="fu">colnames</span>(xenium20))</span>
+<span id="cb10-3"><a href="#cb10-3"></a>xenium20 <span class="ot">&lt;-</span> <span class="fu">t</span>(xenium20)</span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="fu">head</span>(xenium20)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A matrix: 6 × 1 of type dbl</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">xenium20</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4244</td>
+<td>3.9846</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4249</td>
+<td>3.5907</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4250</td>
+<td>4.1152</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4382</td>
+<td>3.8769</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4384</td>
+<td>3.9146</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4389</td>
+<td>3.8547</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cell-11" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="17">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># read gene expression</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>gex <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../1_processed/TCGA_lung_gex.csv"</span>, <span class="at">row.names =</span> <span class="dv">1</span>)</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="fu">colnames</span>(gex) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">"-"</span>, <span class="fu">colnames</span>(gex))</span>
+<span id="cb11-4"><a href="#cb11-4"></a>gex[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A data.frame: 5 × 5</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">TCGA-05-4244</th>
+<th data-quarto-table-cell-role="th" scope="col">TCGA-05-4249</th>
+<th data-quarto-table-cell-role="th" scope="col">TCGA-05-4250</th>
+<th data-quarto-table-cell-role="th" scope="col">TCGA-05-4382</th>
+<th data-quarto-table-cell-role="th" scope="col">TCGA-05-4384</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">A1BG</td>
+<td>26.0302</td>
+<td>120.1350</td>
+<td>50.8597</td>
+<td>145.904</td>
+<td>127.3670</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">A1CF</td>
+<td>0.0000</td>
+<td>0.3220</td>
+<td>0.0000</td>
+<td>0.000</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">A2BP1</td>
+<td>1.7454</td>
+<td>1.6098</td>
+<td>0.0000</td>
+<td>0.000</td>
+<td>0.0000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">A2LD1</td>
+<td>135.5020</td>
+<td>89.0629</td>
+<td>151.1330</td>
+<td>112.069</td>
+<td>87.5748</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">A2M</td>
+<td>9844.7900</td>
+<td>25712.7000</td>
+<td>16943.6000</td>
+<td>23326.300</td>
+<td>48314.6000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cell-12" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="18">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># read survival data</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>surv <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../1_processed/TCGA_lung_survival.csv"</span>, <span class="at">row.names =</span> <span class="dv">1</span>)</span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="fu">colnames</span>(surv) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">"_"</span>, <span class="fu">colnames</span>(surv))</span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="co"># remove time &lt; 0 or NA</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a>surv <span class="ot">&lt;-</span> surv <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(PFI_time_1))</span>
+<span id="cb12-7"><a href="#cb12-7"></a>surv<span class="sc">$</span>PFI_time_1 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(surv<span class="sc">$</span>PFI_time_1)<span class="sc">/</span><span class="fl">365.25</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a>surv<span class="sc">$</span>PFI_1 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(surv<span class="sc">$</span>PFI_1)</span>
+<span id="cb12-9"><a href="#cb12-9"></a></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co"># set max PFI to 10 years</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a>surv<span class="sc">$</span>PFI_1 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(surv<span class="sc">$</span>PFI_time_1 <span class="sc">&gt;</span> <span class="dv">10</span>, <span class="dv">0</span>, surv<span class="sc">$</span>PFI_1)</span>
+<span id="cb12-12"><a href="#cb12-12"></a>surv<span class="sc">$</span>PFI_time_1 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(surv<span class="sc">$</span>PFI_time_1 <span class="sc">&gt;</span> <span class="dv">10</span>, <span class="dv">10</span>, surv<span class="sc">$</span>PFI_time_1)</span>
+<span id="cb12-13"><a href="#cb12-13"></a>surv <span class="ot">&lt;-</span> surv[surv<span class="sc">$</span>PFI_time_1 <span class="sc">&gt;</span> <span class="dv">0</span>, ]</span>
+<span id="cb12-14"><a href="#cb12-14"></a></span>
+<span id="cb12-15"><a href="#cb12-15"></a><span class="co"># create survival object</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a>surv<span class="sc">$</span>PFI <span class="ot">&lt;-</span> <span class="fu">Surv</span>(surv<span class="sc">$</span>PFI_time_1, surv<span class="sc">$</span>PFI_1)</span>
+<span id="cb12-17"><a href="#cb12-17"></a>surv <span class="ot">&lt;-</span> <span class="fu">cbind</span>(surv, ssgsea[<span class="fu">rownames</span>(surv),])</span>
+<span id="cb12-18"><a href="#cb12-18"></a>surv <span class="ot">&lt;-</span> <span class="fu">cbind</span>(surv, xenium20[<span class="fu">rownames</span>(surv),, <span class="at">drop =</span> F])</span>
+<span id="cb12-19"><a href="#cb12-19"></a></span>
+<span id="cb12-20"><a href="#cb12-20"></a><span class="co"># merge expression with survival data</span></span>
+<span id="cb12-21"><a href="#cb12-21"></a>xenium20exp <span class="ot">&lt;-</span> <span class="fu">scale</span>(<span class="fu">t</span>(gex)[<span class="fu">rownames</span>(surv),gs[[<span class="dv">1</span>]]])</span>
+<span id="cb12-22"><a href="#cb12-22"></a>surv <span class="ot">&lt;-</span> <span class="fu">cbind</span>(surv, xenium20exp)</span>
+<span id="cb12-23"><a href="#cb12-23"></a></span>
+<span id="cb12-24"><a href="#cb12-24"></a><span class="fu">head</span>(surv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A data.frame: 6 × 42</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">type</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_1</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_time_1</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_2</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_time_2</th>
+<th data-quarto-table-cell-role="th" scope="col">PFS</th>
+<th data-quarto-table-cell-role="th" scope="col">PFS_time</th>
+<th data-quarto-table-cell-role="th" scope="col">DSS_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">DSS_time_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">DFI_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">⋯</th>
+<th data-quarto-table-cell-role="th" scope="col">MMP8</th>
+<th data-quarto-table-cell-role="th" scope="col">NCSTN</th>
+<th data-quarto-table-cell-role="th" scope="col">NR5A1</th>
+<th data-quarto-table-cell-role="th" scope="col">NTSR1</th>
+<th data-quarto-table-cell-role="th" scope="col">OPRM1</th>
+<th data-quarto-table-cell-role="th" scope="col">PARP1</th>
+<th data-quarto-table-cell-role="th" scope="col">PBX1</th>
+<th data-quarto-table-cell-role="th" scope="col">RILPL2</th>
+<th data-quarto-table-cell-role="th" scope="col">SCG5</th>
+<th data-quarto-table-cell-role="th" scope="col">TMEM106B</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">⋯</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4249</td>
+<td>LUAD</td>
+<td>0</td>
+<td>4.1697467</td>
+<td>0</td>
+<td>1523</td>
+<td>0</td>
+<td>1523</td>
+<td>0</td>
+<td>1523</td>
+<td>NA</td>
+<td>⋯</td>
+<td>-0.08783663</td>
+<td>0.4951856</td>
+<td>-0.14335876</td>
+<td>-0.10751199</td>
+<td>-0.1012157</td>
+<td>1.0723559</td>
+<td>-0.6294784</td>
+<td>-0.06100895</td>
+<td>-0.25605393</td>
+<td>-0.19812889</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4250</td>
+<td>LUAD</td>
+<td>0</td>
+<td>0.3312799</td>
+<td>0</td>
+<td>121</td>
+<td>1</td>
+<td>121</td>
+<td>NA</td>
+<td>121</td>
+<td>NA</td>
+<td>⋯</td>
+<td>-0.28991267</td>
+<td>-0.5851363</td>
+<td>-0.14070875</td>
+<td>-0.06453740</td>
+<td>-0.1012157</td>
+<td>-0.6689259</td>
+<td>-0.8526004</td>
+<td>-0.45319223</td>
+<td>1.02220044</td>
+<td>0.81105108</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4382</td>
+<td>LUAD</td>
+<td>1</td>
+<td>0.9144422</td>
+<td>1</td>
+<td>334</td>
+<td>1</td>
+<td>334</td>
+<td>0</td>
+<td>607</td>
+<td>1</td>
+<td>⋯</td>
+<td>0.98036290</td>
+<td>2.1426275</td>
+<td>-0.09064977</td>
+<td>-0.05428312</td>
+<td>0.2282981</td>
+<td>-0.4721944</td>
+<td>-0.5185958</td>
+<td>0.06266203</td>
+<td>0.06254723</td>
+<td>1.34793936</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4384</td>
+<td>LUAD</td>
+<td>1</td>
+<td>0.5010267</td>
+<td>1</td>
+<td>183</td>
+<td>1</td>
+<td>183</td>
+<td>0</td>
+<td>426</td>
+<td>NA</td>
+<td>⋯</td>
+<td>0.16829559</td>
+<td>0.9057056</td>
+<td>-0.14596833</td>
+<td>-0.10685010</td>
+<td>0.9502542</td>
+<td>-0.5934462</td>
+<td>-0.2294542</td>
+<td>-0.34025058</td>
+<td>0.13034559</td>
+<td>-0.06938389</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4389</td>
+<td>LUAD</td>
+<td>0</td>
+<td>3.7481177</td>
+<td>0</td>
+<td>1369</td>
+<td>0</td>
+<td>1369</td>
+<td>0</td>
+<td>1369</td>
+<td>NA</td>
+<td>⋯</td>
+<td>-0.32039621</td>
+<td>1.0763723</td>
+<td>-0.14799204</td>
+<td>-0.10914289</td>
+<td>-0.1012157</td>
+<td>-0.1040168</td>
+<td>-0.9009495</td>
+<td>0.56662034</td>
+<td>0.47124464</td>
+<td>1.69444579</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4390</td>
+<td>LUAD</td>
+<td>1</td>
+<td>1.0814511</td>
+<td>NA</td>
+<td>NA</td>
+<td>1</td>
+<td>395</td>
+<td>0</td>
+<td>1126</td>
+<td>NA</td>
+<td>⋯</td>
+<td>1.07621775</td>
+<td>-0.1573105</td>
+<td>-0.13637465</td>
+<td>0.08829672</td>
+<td>-0.1012157</td>
+<td>-0.4078074</td>
+<td>-0.5433974</td>
+<td>-1.26060748</td>
+<td>0.06295134</td>
+<td>0.21645937</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cell-14" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="19">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>surv.LUAD <span class="ot">&lt;-</span> surv <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>    <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"LUAD"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb13-4"><a href="#cb13-4"></a>        <span class="at">LUAD =</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(LUAD)),</span>
+<span id="cb13-5"><a href="#cb13-5"></a>        <span class="at">xenium20 =</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(xenium20)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-15" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="20">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>lm_eqn <span class="ot">&lt;-</span> <span class="cf">function</span>(df){</span>
+<span id="cb14-2"><a href="#cb14-2"></a>    m <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, df);</span>
+<span id="cb14-3"><a href="#cb14-3"></a>    eq <span class="ot">&lt;-</span> <span class="fu">substitute</span>(<span class="fu">italic</span>(y) <span class="sc">==</span> a <span class="sc">+</span> b <span class="sc">%.%</span> <span class="fu">italic</span>(x)<span class="sc">*</span><span class="st">","</span><span class="sc">~</span><span class="er">~</span><span class="fu">italic</span>(r)<span class="sc">^</span><span class="dv">2</span><span class="sc">~</span><span class="st">"="</span><span class="sc">~</span>r2, </span>
+<span id="cb14-4"><a href="#cb14-4"></a>         <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">format</span>(<span class="fu">unname</span>(<span class="fu">coef</span>(m)[<span class="dv">1</span>]), <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb14-5"><a href="#cb14-5"></a>              <span class="at">b =</span> <span class="fu">format</span>(<span class="fu">unname</span>(<span class="fu">coef</span>(m)[<span class="dv">2</span>]), <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb14-6"><a href="#cb14-6"></a>             <span class="at">r2 =</span> <span class="fu">format</span>(<span class="fu">summary</span>(m)<span class="sc">$</span>r.squared, <span class="at">digits =</span> <span class="dv">3</span>)))</span>
+<span id="cb14-7"><a href="#cb14-7"></a>    <span class="fu">as.character</span>(<span class="fu">as.expression</span>(eq));</span>
+<span id="cb14-8"><a href="#cb14-8"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-16" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="21">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">library</span>(ggpmisc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ggpp
+
+Registered S3 methods overwritten by 'ggpp':
+  method                  from   
+  heightDetails.titleGrob ggplot2
+  widthDetails.titleGrob  ggplot2
+
+
+Attaching package: ‘ggpp’
+
+
+The following objects are masked from ‘package:ggpubr’:
+
+    as_npc, as_npcx, as_npcy
+
+
+The following object is masked from ‘package:ggplot2’:
+
+    annotate
+
+
+Registered S3 method overwritten by 'ggpmisc':
+  method                  from   
+  as.character.polynomial polynom
+</code></pre>
+</div>
+</div>
+<div id="cell-17" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="35">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>class <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../3_classification/TCGA_metastatic_classification.csv"</span>, <span class="at">row.names =</span> <span class="dv">1</span>)</span>
+<span id="cb17-2"><a href="#cb17-2"></a>surv.LUAD <span class="ot">&lt;-</span> <span class="fu">cbind</span>(surv.LUAD, class[<span class="fu">rownames</span>(surv.LUAD),])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-18" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="68">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">options</span>(<span class="at">repr.plot.width=</span><span class="dv">7</span>, <span class="at">repr.plot.height=</span><span class="dv">5</span>)</span>
+<span id="cb18-2"><a href="#cb18-2"></a>surv.LUAD <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>    <span class="co">#filter(LUAD &gt; -5 &amp; LUAD &lt; 3) %&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a>    <span class="co">#filter(xenium20 &lt; 4) %&gt;%</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a>    <span class="fu">mutate</span>(<span class="at">risk =</span> <span class="fu">ifelse</span>(LUAD_coxph <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"High"</span>, <span class="st">"Low"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> LUAD, <span class="at">y =</span> xenium20)) <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> risk)) <span class="sc">+</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a>    <span class="fu">stat_cor</span>(<span class="at">method =</span> <span class="st">"pearson"</span>) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"grey60"</span>)) <span class="sc">+</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a>    <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Risk"</span>)) <span class="sc">+</span></span>
+<span id="cb18-12"><a href="#cb18-12"></a>    <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="validation2_files/figure-html/cell-17-output-2.png" width="420" height="300" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-19" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="70">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">options</span>(<span class="at">repr.plot.width=</span><span class="dv">15</span>, <span class="at">repr.plot.height=</span><span class="dv">10</span>)</span>
+<span id="cb20-2"><a href="#cb20-2"></a>surv.LUAD <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>    <span class="fu">select</span>(<span class="fu">c</span>(<span class="st">"LUAD"</span>, <span class="fu">unname</span>(gs[[<span class="dv">1</span>]]))) <span class="sc">%&gt;%</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">unname</span>(gs[[<span class="dv">1</span>]]), <span class="at">names_to =</span> <span class="st">"xenium_genes"</span>, <span class="at">values_to =</span> <span class="st">"exprs"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb20-6"><a href="#cb20-6"></a>        <span class="at">LUAD =</span> <span class="fu">as.numeric</span>(LUAD),</span>
+<span id="cb20-7"><a href="#cb20-7"></a>        <span class="at">exprs =</span> <span class="fu">as.numeric</span>(exprs)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> LUAD, <span class="at">y =</span> exprs)) <span class="sc">+</span></span>
+<span id="cb20-9"><a href="#cb20-9"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>xenium_genes, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11"></a>    <span class="fu">stat_cor</span>(<span class="at">method =</span> <span class="st">"pearson"</span>) <span class="sc">+</span></span>
+<span id="cb20-12"><a href="#cb20-12"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="#cb20-13"></a>    <span class="fu">theme_bw</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="validation2_files/figure-html/cell-18-output-2.png" width="900" height="600" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-20" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="25">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>find_coxph_cutoff <span class="ot">&lt;-</span> <span class="cf">function</span>(df, column, survival, <span class="at">set_cutoff =</span> <span class="cn">NULL</span>, <span class="at">covariates =</span> <span class="cn">NULL</span>, <span class="at">interquartile =</span> T){</span>
+<span id="cb22-2"><a href="#cb22-2"></a></span>
+<span id="cb22-3"><a href="#cb22-3"></a>    <span class="co">#split data at 200 intervals and find the cutoff with most significant difference in survival</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>    <span class="cf">if</span>(<span class="fu">length</span>(covariates) <span class="sc">&gt;</span> <span class="dv">0</span>){</span>
+<span id="cb22-5"><a href="#cb22-5"></a>        covariates_coxph <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">" + "</span>, <span class="fu">paste0</span>(covariates, <span class="at">collapse =</span> <span class="st">" + "</span>))</span>
+<span id="cb22-6"><a href="#cb22-6"></a>        <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"set covariates ===&gt; "</span>, covariates_coxph))}</span>
+<span id="cb22-7"><a href="#cb22-7"></a>    <span class="cf">else</span>{</span>
+<span id="cb22-8"><a href="#cb22-8"></a>        covariates_coxph <span class="ot">&lt;-</span> <span class="st">""</span>}</span>
+<span id="cb22-9"><a href="#cb22-9"></a>    cutoff <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a></span>
+<span id="cb22-11"><a href="#cb22-11"></a>    <span class="cf">if</span>(interquartile){</span>
+<span id="cb22-12"><a href="#cb22-12"></a>        lower <span class="ot">&lt;-</span> <span class="fu">quantile</span>(df[[column]])[[<span class="dv">2</span>]]</span>
+<span id="cb22-13"><a href="#cb22-13"></a>        upper <span class="ot">&lt;-</span> <span class="fu">quantile</span>(df[[column]])[[<span class="dv">4</span>]]}</span>
+<span id="cb22-14"><a href="#cb22-14"></a>    <span class="cf">else</span>{</span>
+<span id="cb22-15"><a href="#cb22-15"></a>        lower <span class="ot">&lt;-</span> <span class="fu">min</span>(df[[column]])</span>
+<span id="cb22-16"><a href="#cb22-16"></a>    upper <span class="ot">&lt;-</span> <span class="fu">max</span>(df[[column]])}</span>
+<span id="cb22-17"><a href="#cb22-17"></a></span>
+<span id="cb22-18"><a href="#cb22-18"></a>    no <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb22-19"><a href="#cb22-19"></a></span>
+<span id="cb22-20"><a href="#cb22-20"></a>    <span class="cf">for</span> (split <span class="cf">in</span> <span class="fu">seq</span>(lower, upper, <span class="at">length.out =</span> <span class="dv">200</span>)) {</span>
+<span id="cb22-21"><a href="#cb22-21"></a>        df[[<span class="st">"coxph"</span>]] <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df[[column]] <span class="sc">&gt;</span> split, <span class="st">"High"</span>, <span class="st">"Low"</span>)</span>
+<span id="cb22-22"><a href="#cb22-22"></a>        df[[<span class="st">"coxph"</span>]] <span class="ot">&lt;-</span> <span class="fu">factor</span>(df[[<span class="st">"coxph"</span>]], <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"High"</span>))</span>
+<span id="cb22-23"><a href="#cb22-23"></a>        remove <span class="ot">&lt;-</span> <span class="fu">any</span>(<span class="fu">table</span>(df<span class="sc">$</span>coxph) <span class="sc">&lt;</span> no <span class="sc">/</span> <span class="dv">20</span>)</span>
+<span id="cb22-24"><a href="#cb22-24"></a>        <span class="cf">if</span> (remove) {</span>
+<span id="cb22-25"><a href="#cb22-25"></a>            <span class="cf">next</span></span>
+<span id="cb22-26"><a href="#cb22-26"></a>        }</span>
+<span id="cb22-27"><a href="#cb22-27"></a>        surv.cox <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">as.formula</span>(<span class="fu">paste0</span>(survival, <span class="st">" ~ coxph"</span>, covariates_coxph)), <span class="at">data =</span> df)</span>
+<span id="cb22-28"><a href="#cb22-28"></a>        </span>
+<span id="cb22-29"><a href="#cb22-29"></a>        <span class="co"># Extract HR and p-value</span></span>
+<span id="cb22-30"><a href="#cb22-30"></a>        hr <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">exp</span>(<span class="fu">coef</span>(surv.cox))[<span class="dv">1</span>], <span class="dv">3</span>)  <span class="co"># Hazard Ratio</span></span>
+<span id="cb22-31"><a href="#cb22-31"></a>        logr <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">summary</span>(surv.cox)<span class="sc">$</span>coefficients[<span class="dv">1</span>, <span class="st">"Pr(&gt;|z|)"</span>], <span class="dv">3</span>)  <span class="co"># p-value</span></span>
+<span id="cb22-32"><a href="#cb22-32"></a>        </span>
+<span id="cb22-33"><a href="#cb22-33"></a>        cutoff <span class="ot">&lt;-</span> <span class="fu">rbind</span>(cutoff, <span class="fu">c</span>(split, hr, logr))</span>
+<span id="cb22-34"><a href="#cb22-34"></a>        <span class="fu">colnames</span>(cutoff) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"cutoff"</span>, <span class="st">"HR"</span>, <span class="st">"logr"</span>)</span>
+<span id="cb22-35"><a href="#cb22-35"></a>    }</span>
+<span id="cb22-36"><a href="#cb22-36"></a></span>
+<span id="cb22-37"><a href="#cb22-37"></a></span>
+<span id="cb22-38"><a href="#cb22-38"></a>    <span class="co"># use most significant cutoff to split data in "High" &amp; "Low" groups</span></span>
+<span id="cb22-39"><a href="#cb22-39"></a>    cutoff <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(cutoff) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(logr)</span>
+<span id="cb22-40"><a href="#cb22-40"></a>    <span class="cf">if</span>(<span class="fu">length</span>(set_cutoff) <span class="sc">==</span> <span class="dv">0</span>){</span>
+<span id="cb22-41"><a href="#cb22-41"></a>        threshold <span class="ot">&lt;-</span> cutoff<span class="sc">$</span>cutoff[<span class="dv">1</span>]}</span>
+<span id="cb22-42"><a href="#cb22-42"></a>    <span class="cf">else</span> <span class="cf">if</span>(<span class="fu">length</span>(set_cutoff) <span class="sc">==</span> <span class="dv">1</span>){</span>
+<span id="cb22-43"><a href="#cb22-43"></a>        threshold <span class="ot">&lt;-</span> set_cutoff}</span>
+<span id="cb22-44"><a href="#cb22-44"></a>    <span class="cf">else</span>{</span>
+<span id="cb22-45"><a href="#cb22-45"></a>    <span class="fu">error</span>(<span class="st">"set_cutoff should be set to length of 1"</span>)}</span>
+<span id="cb22-46"><a href="#cb22-46"></a>    <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"for &lt;"</span>, column, <span class="st">"&gt;, cutoff is set at  ===&gt; "</span>, threshold))</span>
+<span id="cb22-47"><a href="#cb22-47"></a>    df[[<span class="fu">paste0</span>(column, <span class="st">"_coxph"</span>)]] <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df[[column]] <span class="sc">&gt;</span> <span class="fu">paste0</span>(threshold), <span class="st">"High"</span>, <span class="st">"Low"</span>)</span>
+<span id="cb22-48"><a href="#cb22-48"></a>    df[[<span class="fu">paste0</span>(column, <span class="st">"_coxph"</span>)]] <span class="ot">&lt;-</span> <span class="fu">factor</span>(df[[<span class="fu">paste0</span>(column, <span class="st">"_coxph"</span>)]], <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"High"</span>))</span>
+<span id="cb22-49"><a href="#cb22-49"></a>    df<span class="sc">$</span>coxph <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb22-50"><a href="#cb22-50"></a>    <span class="fu">return</span>(df)</span>
+<span id="cb22-51"><a href="#cb22-51"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-21" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="26">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>surv.LUAD <span class="ot">&lt;-</span> <span class="fu">find_coxph_cutoff</span>(<span class="at">df =</span> surv.LUAD, <span class="at">column =</span> <span class="st">"xenium20"</span>, <span class="at">survival =</span> <span class="st">"PFI"</span>, <span class="at">covariate =</span> <span class="cn">NULL</span>, <span class="at">interquartile =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "for &lt;xenium20&gt;, cutoff is set at  ===&gt; 0.561976140789476"</code></pre>
+</div>
+</div>
+<div id="cell-22" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="46">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">options</span>(<span class="at">repr.plot.width=</span><span class="dv">8</span>, <span class="at">repr.plot.height=</span><span class="dv">8</span>)</span>
+<span id="cb25-2"><a href="#cb25-2"></a>plot_survival <span class="ot">&lt;-</span> <span class="cf">function</span>(df, column, survival, <span class="at">palette =</span> <span class="cn">NULL</span>, ...){</span>
+<span id="cb25-3"><a href="#cb25-3"></a>    <span class="cf">if</span>(<span class="sc">!</span>(column <span class="sc">%in%</span> <span class="fu">colnames</span>(df))){</span>
+<span id="cb25-4"><a href="#cb25-4"></a>    <span class="fu">message</span>(<span class="fu">paste0</span>(<span class="st">"&lt;"</span>, column, <span class="st">"&gt; not found in dataframe. Skipped"</span>))</span>
+<span id="cb25-5"><a href="#cb25-5"></a>    <span class="cf">next</span>}</span>
+<span id="cb25-6"><a href="#cb25-6"></a></span>
+<span id="cb25-7"><a href="#cb25-7"></a>    <span class="fu">suppressMessages</span>({</span>
+<span id="cb25-8"><a href="#cb25-8"></a>    b <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(survival, <span class="st">"~"</span>, column))</span>
+<span id="cb25-9"><a href="#cb25-9"></a>    fit <span class="ot">&lt;-</span> <span class="fu">eval</span>(<span class="fu">substitute</span>(<span class="fu">survfit</span>(b, <span class="at">data =</span> df, <span class="at">conf.type =</span> <span class="st">"log-log"</span>), <span class="fu">list</span>(<span class="at">b =</span> b)))</span>
+<span id="cb25-10"><a href="#cb25-10"></a></span>
+<span id="cb25-11"><a href="#cb25-11"></a>    <span class="cf">if</span>(<span class="fu">length</span>(<span class="fu">names</span>(fit<span class="sc">$</span>strata)) <span class="sc">&gt;</span> <span class="dv">1</span>){</span>
+<span id="cb25-12"><a href="#cb25-12"></a>        <span class="fu">names</span>(fit<span class="sc">$</span>strata) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">".*="</span>, <span class="st">""</span>, <span class="fu">names</span>(fit<span class="sc">$</span>strata))</span>
+<span id="cb25-13"><a href="#cb25-13"></a>        kmplot <span class="ot">&lt;-</span> <span class="fu">ggsurvplot</span>(</span>
+<span id="cb25-14"><a href="#cb25-14"></a>            fit,</span>
+<span id="cb25-15"><a href="#cb25-15"></a>            <span class="at">data =</span> df,</span>
+<span id="cb25-16"><a href="#cb25-16"></a>            <span class="at">palette =</span> palette,</span>
+<span id="cb25-17"><a href="#cb25-17"></a>            <span class="at">risk.table =</span> T,</span>
+<span id="cb25-18"><a href="#cb25-18"></a>            <span class="at">pval =</span> T,</span>
+<span id="cb25-19"><a href="#cb25-19"></a>            <span class="at">risk.table.y.text.col =</span> T,</span>
+<span id="cb25-20"><a href="#cb25-20"></a>            <span class="at">risk.table.y.text =</span> F,</span>
+<span id="cb25-21"><a href="#cb25-21"></a>            <span class="at">legend =</span> <span class="st">"right"</span>,</span>
+<span id="cb25-22"><a href="#cb25-22"></a>            ...)</span>
+<span id="cb25-23"><a href="#cb25-23"></a>            }</span>
+<span id="cb25-24"><a href="#cb25-24"></a>    <span class="cf">else</span>{</span>
+<span id="cb25-25"><a href="#cb25-25"></a>            kmplot <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb25-26"><a href="#cb25-26"></a>    }})</span>
+<span id="cb25-27"><a href="#cb25-27"></a>    kmplot[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> kmplot[[<span class="dv">1</span>]] <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">fill=</span><span class="cn">NA</span>, <span class="at">size=</span><span class="fl">1.5</span>))</span>
+<span id="cb25-28"><a href="#cb25-28"></a>    kmplot[[<span class="dv">2</span>]] <span class="ot">&lt;-</span> kmplot[[<span class="dv">2</span>]] <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">fill=</span><span class="cn">NA</span>, <span class="at">size=</span><span class="fl">1.5</span>))</span>
+<span id="cb25-29"><a href="#cb25-29"></a>    <span class="fu">return</span>(kmplot)}</span>
+<span id="cb25-30"><a href="#cb25-30"></a></span>
+<span id="cb25-31"><a href="#cb25-31"></a>p <span class="ot">&lt;-</span> <span class="fu">plot_survival</span>(surv.LUAD, <span class="at">column =</span> <span class="st">"xenium20_coxph"</span>, <span class="at">legend.title =</span> <span class="st">"Xenium20"</span>, <span class="at">survival =</span> <span class="st">"PFI"</span>, <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"grey60"</span>, <span class="st">"grey1"</span>), <span class="at">conf.int =</span> T, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylab =</span> <span class="st">"Probability"</span>, <span class="at">xlab =</span> <span class="st">"PFI (Years)"</span>, <span class="at">pval.coord =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>))</span>
+<span id="cb25-32"><a href="#cb25-32"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="validation2_files/figure-html/cell-21-output-1.png" width="480" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./xenium2.html" class="pagination-link" aria-label="Validation in Xenium">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Validation in Xenium</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.dev/FrancisCrickInstitute/blob/main/validation2.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

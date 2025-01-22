@@ -1,0 +1,43 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "2025 CRUK Hackathon"
+  description: "2025 CRUK Hackathon Scripts"
+  author: "Matthew Hung"
+  date: last-modified
+  page-navigation: true
+  search: true
+  repo-url: https://github.com/FrancisCrickInstitute/
+  repo-actions: [edit]
+  sidebar:
+    style: docked
+    background: dark
+
+  chapters:
+    - index.qmd
+    - metastatic_signature2.ipynb
+    - ssgsea2.ipynb
+    - xenium2.ipynb
+    - validation2.ipynb
+format:
+  html:
+    theme: flatly
+    fontsize: 1em
+    grid:
+      sidebar-width: 400px
+      body-width: 1000px
+      margin-width: 450px
+      gutter-width: 1.5rem
+    code-fold: show
+    code-tools: true
+    code-line-numbers: true
+    number-sections: true
+    monobackgroundcolor: "#EFEBEA"
+  pdf:
+    documentclass: scrbook
+    fontfamily: libertinus
+    toc: true
+    number-sections: true
+    colorlinks: true

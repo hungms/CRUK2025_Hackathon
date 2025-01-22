@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Matthew Hung">
+<meta name="dcterms.date" content="2025-01-22">
+<meta name="description" content="2025 CRUK Hackathon Scripts">
+
+<title>2&nbsp; Generating Prognostic Signature – 2025 CRUK Hackathon</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./ssgsea2.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d1cbdf98a2738ec369a65716124baecb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./metastatic_signature2.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Generating Prognostic Signature</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">2025 CRUK Hackathon</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/FrancisCrickInstitute/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><strong>Introduction</strong></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./metastatic_signature2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Generating Prognostic Signature</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ssgsea2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Risk Classification with ssGSEA</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./xenium2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Validation in Xenium</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validation2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Validation of Xenium Genes</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="1">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#actions" id="toc-actions" class="nav-link active" data-scroll-target="#actions"><span class="header-section-number">2.1</span> Actions</a></li>
+  <li><a href="#load-format-data" id="toc-load-format-data" class="nav-link" data-scroll-target="#load-format-data"><span class="header-section-number">2.2</span> Load &amp; format data</a></li>
+  <li><a href="#univariate-analysis" id="toc-univariate-analysis" class="nav-link" data-scroll-target="#univariate-analysis"><span class="header-section-number">2.3</span> Univariate Analysis</a>
+  <ul class="collapse">
+  <li><a href="#all-lung" id="toc-all-lung" class="nav-link" data-scroll-target="#all-lung"><span class="header-section-number">2.3.1</span> All LUNG</a></li>
+  <li><a href="#lusc" id="toc-lusc" class="nav-link" data-scroll-target="#lusc"><span class="header-section-number">2.3.2</span> LUSC</a></li>
+  <li><a href="#luad" id="toc-luad" class="nav-link" data-scroll-target="#luad"><span class="header-section-number">2.3.3</span> LUAD</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.dev/FrancisCrickInstitute/blob/main/metastatic_signature2.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Generating Prognostic Signature</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Matthew Hung </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2025-01-22</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="cell-1" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>https<span class="sc">:</span><span class="er">//</span>molecular<span class="sc">-</span>cancer.biomedcentral.com<span class="sc">/</span>articles<span class="sc">/</span><span class="fl">10.1186</span><span class="sc">/</span>s12943<span class="dv">-024-02182</span><span class="sc">-</span>w</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a>cool study and we can potentially do something like this<span class="sc">:</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a> determine metastatic genes specific <span class="cf">for</span> gex cancer</span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="fl">2.</span> use single cell data to look which cells express these genes</span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fl">3.</span> use this to predict metastatic features<span class="sc">/</span>cell type locations on WSI</span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="fl">4.</span> use spatial to <span class="cf">for</span> validation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="actions" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="actions"><span class="header-section-number">2.1</span> Actions</h2>
+<p>We will try to find metastatic-related genes for LUAD/LUSC by doing the following:</p>
+<ol type="1">
+<li>Short-list prognostic genes by univariate analysis (p &lt; 0.05)</li>
+<li>Cross-validate with Lasso-Cox model</li>
+<li>Further short-list genes by multivariate analysis (p &lt; 0.05)</li>
+</ol>
+</section>
+<section id="load-format-data" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="load-format-data"><span class="header-section-number">2.2</span> Load &amp; format data</h2>
+<div id="cell-4" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="15">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># processed on NEMO so far</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">library</span>(SummarizedExperiment)</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="fu">library</span>(survival)</span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="fu">setwd</span>(<span class="st">"/camp/home/hungm/scratch/hungm/matthew/MH_Hackathon/2025_CRUK/data/TCGA2/0_raw"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-5" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="9">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># read gene expression</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>gex <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../1_processed/TCGA_lung_gex.csv"</span>, <span class="at">row.names =</span> <span class="dv">1</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">colnames</span>(gex) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">"-"</span>, <span class="fu">colnames</span>(gex))</span>
+<span id="cb3-4"><a href="#cb3-4"></a>gex <span class="ot">&lt;-</span> <span class="fu">log1p</span>(gex)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>gex[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A data.frame: 5 × 5</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">TCGA-05-4244</th>
+<th data-quarto-table-cell-role="th" scope="col">TCGA-05-4249</th>
+<th data-quarto-table-cell-role="th" scope="col">TCGA-05-4250</th>
+<th data-quarto-table-cell-role="th" scope="col">TCGA-05-4382</th>
+<th data-quarto-table-cell-role="th" scope="col">TCGA-05-4384</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">A1BG</td>
+<td>3.296955</td>
+<td>4.7969056</td>
+<td>3.948542</td>
+<td>4.989779</td>
+<td>4.854893</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">A1CF</td>
+<td>0.000000</td>
+<td>0.2791457</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">A2BP1</td>
+<td>1.009927</td>
+<td>0.9592736</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">A2LD1</td>
+<td>4.916339</td>
+<td>4.5005083</td>
+<td>5.024755</td>
+<td>4.727998</td>
+<td>4.483847</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">A2M</td>
+<td>9.194799</td>
+<td>10.1547792</td>
+<td>9.737704</td>
+<td>10.057380</td>
+<td>10.785510</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cell-6" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="10">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># read survival data</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>surv <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../1_processed/TCGA_lung_survival.csv"</span>, <span class="at">row.names =</span> <span class="dv">1</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">colnames</span>(surv) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">"_"</span>, <span class="fu">colnames</span>(surv))</span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co"># remove time &lt; 0 or NA</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>surv <span class="ot">&lt;-</span> surv <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(PFI_time_1))</span>
+<span id="cb4-7"><a href="#cb4-7"></a>surv<span class="sc">$</span>PFI_time_1 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(surv<span class="sc">$</span>PFI_time_1)<span class="sc">/</span><span class="fl">365.25</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>surv<span class="sc">$</span>PFI_1 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(surv<span class="sc">$</span>PFI_1)</span>
+<span id="cb4-9"><a href="#cb4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co"># set max PFI to 10 years</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a>surv<span class="sc">$</span>PFI_1 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(surv<span class="sc">$</span>PFI_time_1 <span class="sc">&gt;</span> <span class="dv">10</span>, <span class="dv">0</span>, surv<span class="sc">$</span>PFI_1)</span>
+<span id="cb4-12"><a href="#cb4-12"></a>surv<span class="sc">$</span>PFI_time_1 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(surv<span class="sc">$</span>PFI_time_1 <span class="sc">&gt;</span> <span class="dv">10</span>, <span class="dv">10</span>, surv<span class="sc">$</span>PFI_time_1)</span>
+<span id="cb4-13"><a href="#cb4-13"></a>surv <span class="ot">&lt;-</span> surv[surv<span class="sc">$</span>PFI_time_1 <span class="sc">&gt;</span> <span class="dv">0</span>, ]</span>
+<span id="cb4-14"><a href="#cb4-14"></a></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co"># create survival object</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>surv<span class="sc">$</span>PFI <span class="ot">&lt;-</span> <span class="fu">Surv</span>(surv<span class="sc">$</span>PFI_time_1, surv<span class="sc">$</span>PFI_1)</span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="fu">head</span>(surv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A data.frame: 6 × 18</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">type</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_1</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_time_1</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_2</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_time_2</th>
+<th data-quarto-table-cell-role="th" scope="col">PFS</th>
+<th data-quarto-table-cell-role="th" scope="col">PFS_time</th>
+<th data-quarto-table-cell-role="th" scope="col">DSS_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">DSS_time_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">DFI_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">DFI_time_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_time_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_1_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_time_1_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_2_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_time_2_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;Surv&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4249</td>
+<td>LUAD</td>
+<td>0</td>
+<td>4.1697467</td>
+<td>0</td>
+<td>1523</td>
+<td>0</td>
+<td>1523</td>
+<td>0</td>
+<td>1523</td>
+<td>NA</td>
+<td>NA</td>
+<td>0</td>
+<td>1523</td>
+<td>0</td>
+<td>1523</td>
+<td>0</td>
+<td>1523</td>
+<td>4.1697467, 0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4250</td>
+<td>LUAD</td>
+<td>0</td>
+<td>0.3312799</td>
+<td>0</td>
+<td>121</td>
+<td>1</td>
+<td>121</td>
+<td>NA</td>
+<td>121</td>
+<td>NA</td>
+<td>NA</td>
+<td>2</td>
+<td>121</td>
+<td>2</td>
+<td>121</td>
+<td>2</td>
+<td>121</td>
+<td>0.3312799, 0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4382</td>
+<td>LUAD</td>
+<td>1</td>
+<td>0.9144422</td>
+<td>1</td>
+<td>334</td>
+<td>1</td>
+<td>334</td>
+<td>0</td>
+<td>607</td>
+<td>1</td>
+<td>334</td>
+<td>1</td>
+<td>334</td>
+<td>1</td>
+<td>334</td>
+<td>1</td>
+<td>334</td>
+<td>0.9144422, 1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4384</td>
+<td>LUAD</td>
+<td>1</td>
+<td>0.5010267</td>
+<td>1</td>
+<td>183</td>
+<td>1</td>
+<td>183</td>
+<td>0</td>
+<td>426</td>
+<td>NA</td>
+<td>NA</td>
+<td>1</td>
+<td>183</td>
+<td>1</td>
+<td>183</td>
+<td>1</td>
+<td>183</td>
+<td>0.5010267, 1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4389</td>
+<td>LUAD</td>
+<td>0</td>
+<td>3.7481177</td>
+<td>0</td>
+<td>1369</td>
+<td>0</td>
+<td>1369</td>
+<td>0</td>
+<td>1369</td>
+<td>NA</td>
+<td>NA</td>
+<td>0</td>
+<td>1369</td>
+<td>0</td>
+<td>1369</td>
+<td>0</td>
+<td>1369</td>
+<td>3.7481177, 0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4390</td>
+<td>LUAD</td>
+<td>1</td>
+<td>1.0814511</td>
+<td>NA</td>
+<td>NA</td>
+<td>1</td>
+<td>395</td>
+<td>0</td>
+<td>1126</td>
+<td>NA</td>
+<td>NA</td>
+<td>1</td>
+<td>395</td>
+<td>1</td>
+<td>395</td>
+<td>NA</td>
+<td>NA</td>
+<td>1.0814511, 1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cell-7" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="11">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># merge expression with survival data</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>surv <span class="ot">&lt;-</span> <span class="fu">cbind</span>(surv, <span class="fu">t</span>(gex)[<span class="fu">rownames</span>(surv),])</span>
+<span id="cb5-3"><a href="#cb5-3"></a>surv[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">15</span><span class="sc">:</span><span class="dv">20</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A data.frame: 5 × 6</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_time_1_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_2_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI_time_2_cr</th>
+<th data-quarto-table-cell-role="th" scope="col">PFI</th>
+<th data-quarto-table-cell-role="th" scope="col">A1BG</th>
+<th data-quarto-table-cell-role="th" scope="col">A1CF</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;Surv&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4249</td>
+<td>1523</td>
+<td>0</td>
+<td>1523</td>
+<td>4.1697467, 0</td>
+<td>4.796906</td>
+<td>0.2791457</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4250</td>
+<td>121</td>
+<td>2</td>
+<td>121</td>
+<td>0.3312799, 0</td>
+<td>3.948542</td>
+<td>0.0000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4382</td>
+<td>334</td>
+<td>1</td>
+<td>334</td>
+<td>0.9144422, 1</td>
+<td>4.989779</td>
+<td>0.0000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4384</td>
+<td>183</td>
+<td>1</td>
+<td>183</td>
+<td>0.5010267, 1</td>
+<td>4.854893</td>
+<td>0.0000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">TCGA-05-4389</td>
+<td>1369</td>
+<td>0</td>
+<td>1369</td>
+<td>3.7481177, 0</td>
+<td>4.221578</td>
+<td>3.6174264</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="univariate-analysis" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="univariate-analysis"><span class="header-section-number">2.3</span> Univariate Analysis</h2>
+<section id="all-lung" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="all-lung"><span class="header-section-number">2.3.1</span> All LUNG</h3>
+<p>Removed patients without outcome/survival time = 0, then do univariate cox regression to filter prognostic genes (4184, p &lt; 0.05). Performed lasso-cox regression (a = 1, nfolds = 5) resulting in 151 prognostic genes.</p>
+<div id="cell-9" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="12">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="fu">library</span>(foreach)</span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co"># Set up parallel backend</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>num_cores <span class="ot">&lt;-</span> <span class="dv">30</span>  <span class="co"># Use all available cores minus one</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(num_cores)</span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="fu">registerDoParallel</span>(cl)</span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co"># Initialize parallel processing</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>univariate.genes <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">gene =</span> <span class="fu">rownames</span>(gex), <span class="at">.combine =</span> rbind, <span class="at">.packages =</span> <span class="fu">c</span>(<span class="st">"survival"</span>)) <span class="sc">%dopar%</span> {</span>
+<span id="cb6-12"><a href="#cb6-12"></a>    <span class="co"># Create formula dynamically</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>    formula <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">"PFI ~ `"</span>, gene, <span class="st">"`"</span>))</span>
+<span id="cb6-14"><a href="#cb6-14"></a>    </span>
+<span id="cb6-15"><a href="#cb6-15"></a>    <span class="co"># Fit Cox model</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>    cox <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">coxph</span>(formula, <span class="at">data =</span> surv))</span>
+<span id="cb6-17"><a href="#cb6-17"></a>    </span>
+<span id="cb6-18"><a href="#cb6-18"></a>    <span class="co"># Extract hazard ratio (HR) and p-value</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>    hr <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(cox<span class="sc">$</span>coef)[[<span class="dv">2</span>]][<span class="dv">1</span>]</span>
+<span id="cb6-20"><a href="#cb6-20"></a>    pvalue <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(cox<span class="sc">$</span>coef)[[<span class="dv">5</span>]][<span class="dv">1</span>]</span>
+<span id="cb6-21"><a href="#cb6-21"></a>    </span>
+<span id="cb6-22"><a href="#cb6-22"></a>    <span class="co"># Return results as a data frame</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a>    <span class="fu">data.frame</span>(<span class="at">gene =</span> gene, <span class="at">hr =</span> hr, <span class="at">pvalue =</span> pvalue)</span>
+<span id="cb6-24"><a href="#cb6-24"></a>}</span>
+<span id="cb6-25"><a href="#cb6-25"></a></span>
+<span id="cb6-26"><a href="#cb6-26"></a><span class="co"># Stop parallel backend</span></span>
+<span id="cb6-27"><a href="#cb6-27"></a><span class="fu">stopCluster</span>(cl)</span>
+<span id="cb6-28"><a href="#cb6-28"></a></span>
+<span id="cb6-29"><a href="#cb6-29"></a><span class="co"># View results</span></span>
+<span id="cb6-30"><a href="#cb6-30"></a><span class="fu">head</span>(univariate.genes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A data.frame: 6 × 3</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">gene</th>
+<th data-quarto-table-cell-role="th" scope="col">hr</th>
+<th data-quarto-table-cell-role="th" scope="col">pvalue</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">1</td>
+<td>A1BG</td>
+<td>0.9704959</td>
+<td>0.618871566</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">2</td>
+<td>A1CF</td>
+<td>1.0644249</td>
+<td>0.374985739</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">3</td>
+<td>A2BP1</td>
+<td>0.9554042</td>
+<td>0.353871226</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">4</td>
+<td>A2LD1</td>
+<td>1.2651549</td>
+<td>0.051995061</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">5</td>
+<td>A2M</td>
+<td>1.0336125</td>
+<td>0.521458510</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">6</td>
+<td>A2ML1</td>
+<td>0.9438323</td>
+<td>0.002350159</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cell-10" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="13">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># filter genes with univariate-cox &lt; 0.05</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>uni <span class="ot">&lt;-</span> univariate.genes<span class="sc">$</span>gene[<span class="fu">which</span>(univariate.genes<span class="sc">$</span>pvalue <span class="sc">&lt;</span> <span class="fl">0.05</span>)]</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="fu">length</span>(uni)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>uni</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+4184
+</div>
+<div class="cell-output cell-output-display">
+<style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class="list-inline"><li>'A2ML1'</li><li>'A4GALT'</li><li>'AADAC'</li><li>'AADACL2'</li><li>'ABCA13'</li><li>'ABCA5'</li><li>'ABCC1'</li><li>'ABCC3'</li><li>'ABCC5'</li><li>'ABCC6'</li><li>'ABCC6P1'</li><li>'ABCD1'</li><li>'ABCF3'</li><li>'ABCG5'</li><li>'ABHD10'</li><li>'ABHD6'</li><li>'ABI1'</li><li>'ABI2'</li><li>'ABL1'</li><li>'ABL2'</li><li>'ABLIM3'</li><li>'ABP1'</li><li>'ACAD11'</li><li>'ACAD9'</li><li>'ACAP1'</li><li>'ACAP2'</li><li>'ACBD5'</li><li>'ACCN2'</li><li>'ACCN4'</li><li>'ACCSL'</li><li>'ACO1'</li><li>'ACO2'</li><li>'ACOT2'</li><li>'ACOT4'</li><li>'ACOT6'</li><li>'ACOT9'</li><li>'ACOX2'</li><li>'ACP2'</li><li>'ACPL2'</li><li>'ACPP'</li><li>'ACSBG1'</li><li>'ACSF2'</li><li>'ACSF3'</li><li>'ACSL3'</li><li>'ACSL4'</li><li>'ACSL5'</li><li>'ACSS1'</li><li>'ACTL6A'</li><li>'ACTN1'</li><li>'ACVR1C'</li><li>'ACY3'</li><li>'ADAD2'</li><li>'ADAL'</li><li>'ADAM20'</li><li>'ADAM23'</li><li>'ADAM6'</li><li>'ADAM8'</li><li>'ADAMTS17'</li><li>'ADAMTS20'</li><li>'ADAMTS6'</li><li>'ADAMTS7'</li><li>'ADAMTS9'</li><li>'ADAP1'</li><li>'ADAR'</li><li>'ADAT2'</li><li>'ADCY10'</li><li>'ADCY2'</li><li>'ADD1'</li><li>'ADD3'</li><li>'ADH1C'</li><li>'ADH5'</li><li>'ADH7'</li><li>'ADI1'</li><li>'ADORA1'</li><li>'ADPGK'</li><li>'ADRA1B'</li><li>'ADRA2B'</li><li>'ADSL'</li><li>'ADSS'</li><li>'ADSSL1'</li><li>'AEBP2'</li><li>'AFF1'</li><li>'AFF2'</li><li>'AFF4'</li><li>'AGA'</li><li>'AGAP11'</li><li>'AGFG1'</li><li>'AGGF1'</li><li>'AGK'</li><li>'AGL'</li><li>'AGPAT1'</li><li>'AGPAT2'</li><li>'AGPAT6'</li><li>'AGPS'</li><li>'AGR2'</li><li>'AGRN'</li><li>'AGT'</li><li>'AGXT2L1'</li><li>'AHCYL2'</li><li>'AHDC1'</li><li>'AHRR'</li><li>'AIDA'</li><li>'AIFM2'</li><li>'AIFM3'</li><li>'AIG1'</li><li>'AKAP12'</li><li>'AKAP2'</li><li>'AKAP3'</li><li>'AKAP6'</li><li>'AKAP7'</li><li>'AKAP8'</li><li>'AKR1A1'</li><li>'AKR1B10'</li><li>'AKR1C1'</li><li>'AKR1C2'</li><li>'ALDH16A1'</li><li>'ALDH1A1'</li><li>'ALDH3A1'</li><li>'ALDH3B1'</li><li>'ALDH3B2'</li><li>'ALDH4A1'</li><li>'ALDH7A1'</li><li>'ALDH8A1'</li><li>'ALDOC'</li><li>'ALG1L'</li><li>'ALG3'</li><li>'ALK'</li><li>'ALKBH2'</li><li>'ALKBH3'</li><li>'ALKBH7'</li><li>'ALOX12'</li><li>'ALOX15'</li><li>'ALPI'</li><li>'ALPK3'</li><li>'ALPP'</li><li>'ALPPL2'</li><li>'ALS2'</li><li>'ALS2CR4'</li><li>'AMD1'</li><li>'AMDHD1'</li><li>'AMIGO2'</li><li>'AMPD1'</li><li>'AMTN'</li><li>'ANAPC13'</li><li>'ANAPC5'</li><li>'ANAPC7'</li><li>'ANG'</li><li>'ANGPTL4'</li><li>'ANGPTL6'</li><li>'ANKFY1'</li><li>'ANKK1'</li><li>'ANKRD13B'</li><li>'ANKRD16'</li><li>'ANKRD2'</li><li>'ANKRD20A3'</li><li>'ANKRD20B'</li><li>'ANKRD28'</li><li>'ANKRD32'</li><li>'ANKRD49'</li><li>'ANKRD54'</li><li>'ANKRD9'</li><li>'ANO10'</li><li>'ANO3'</li><li>'ANO5'</li><li>'ANO6'</li><li>'ANO7'</li><li>'ANP32C'</li><li>'ANP32E'</li><li>'ANTXR2'</li><li>'ANXA11'</li><li>'ANXA2P1'</li><li>'ANXA5'</li><li>'ANXA8'</li><li>'ANXA8L2'</li><li>'ANXA9'</li><li>'AOAH'</li><li>'AOX2P'</li><li>'AP1B1'</li><li>'AP1S3'</li><li>'AP2A2'</li><li>'AP2B1'</li><li>'AP2M1'</li><li>'AP3B1'</li><li>'AP3B2'</li><li>'AP3S1'</li><li>'AP4S1'</li><li>'APAF1'</li><li>'APBB1'</li><li>'APBB2'</li><li>'APCDD1'</li><li>'APCDD1L'</li><li>'APEX2'</li><li>'APOB'</li><li>'APOBEC1'</li><li>'APOBEC3A'</li><li>'APOBEC3B'</li><li>'APOBEC3C'</li><li>'APOBEC3D'</li><li>'APOBEC3F'</li><li>'APOC3'</li><li>⋯</li><li>'VEPH1'</li><li>'VEZT'</li><li>'VGF'</li><li>'VGLL3'</li><li>'VIPR2'</li><li>'VIT'</li><li>'VMA21'</li><li>'VMAC'</li><li>'VPREB3'</li><li>'VPS18'</li><li>'VPS33A'</li><li>'VPS37B'</li><li>'VPS8'</li><li>'VSIG10'</li><li>'VSNL1'</li><li>'VSTM2L'</li><li>'VTCN1'</li><li>'VTI1B'</li><li>'VTN'</li><li>'VWC2'</li><li>'VWCE'</li><li>'WASF1'</li><li>'WASF2'</li><li>'WASL'</li><li>'WDFY2'</li><li>'WDR34'</li><li>'WDR37'</li><li>'WDR44'</li><li>'WDR47'</li><li>'WDR53'</li><li>'WDR55'</li><li>'WDR59'</li><li>'WDR5B'</li><li>'WDR60'</li><li>'WDR61'</li><li>'WDR66'</li><li>'WDR69'</li><li>'WDR70'</li><li>'WDR72'</li><li>'WDR77'</li><li>'WDR83'</li><li>'WDR91'</li><li>'WFDC10A'</li><li>'WFDC5'</li><li>'WFDC9'</li><li>'WHAMM'</li><li>'WHSC1L1'</li><li>'WIPI1'</li><li>'WNK2'</li><li>'WNT2B'</li><li>'WNT3A'</li><li>'WNT5A'</li><li>'WNT7B'</li><li>'WSCD1'</li><li>'WSCD2'</li><li>'WTAP'</li><li>'WWC1'</li><li>'WWC2'</li><li>'XAGE1D'</li><li>'XAGE2'</li><li>'XCL2'</li><li>'XCR1'</li><li>'XDH'</li><li>'XG'</li><li>'XIAP'</li><li>'XKR3'</li><li>'XPNPEP1'</li><li>'XPNPEP3'</li><li>'XRCC4'</li><li>'XRCC5'</li><li>'XYLB'</li><li>'YBX1'</li><li>'YEATS2'</li><li>'YIPF1'</li><li>'YIPF5'</li><li>'YPEL2'</li><li>'ZBED5'</li><li>'ZBTB10'</li><li>'ZBTB11'</li><li>'ZBTB32'</li><li>'ZBTB42'</li><li>'ZBTB44'</li><li>'ZBTB5'</li><li>'ZBTB7C'</li><li>'ZC3H13'</li><li>'ZC3H14'</li><li>'ZCWPW1'</li><li>'ZDHHC11'</li><li>'ZDHHC21'</li><li>'ZDHHC8'</li><li>'ZDHHC9'</li><li>'ZFHX3'</li><li>'ZFP42'</li><li>'ZFP64'</li><li>'ZFR'</li><li>'ZFX'</li><li>'ZFYVE16'</li><li>'ZG16'</li><li>'ZHX2'</li><li>'ZIC2'</li><li>'ZIC5'</li><li>'ZMAT3'</li><li>'ZMAT5'</li><li>'ZMYM6'</li><li>'ZNF124'</li><li>'ZNF131'</li><li>'ZNF136'</li><li>'ZNF137'</li><li>'ZNF148'</li><li>'ZNF16'</li><li>'ZNF160'</li><li>'ZNF174'</li><li>'ZNF202'</li><li>'ZNF22'</li><li>'ZNF239'</li><li>'ZNF25'</li><li>'ZNF254'</li><li>'ZNF266'</li><li>'ZNF273'</li><li>'ZNF274'</li><li>'ZNF276'</li><li>'ZNF28'</li><li>'ZNF281'</li><li>'ZNF3'</li><li>'ZNF304'</li><li>'ZNF317'</li><li>'ZNF318'</li><li>'ZNF32'</li><li>'ZNF330'</li><li>'ZNF337'</li><li>'ZNF350'</li><li>'ZNF385A'</li><li>'ZNF389'</li><li>'ZNF394'</li><li>'ZNF395'</li><li>'ZNF415'</li><li>'ZNF436'</li><li>'ZNF44'</li><li>'ZNF440'</li><li>'ZNF444'</li><li>'ZNF467'</li><li>'ZNF468'</li><li>'ZNF488'</li><li>'ZNF490'</li><li>'ZNF498'</li><li>'ZNF512'</li><li>'ZNF519'</li><li>'ZNF525'</li><li>'ZNF543'</li><li>'ZNF556'</li><li>'ZNF557'</li><li>'ZNF559'</li><li>'ZNF561'</li><li>'ZNF562'</li><li>'ZNF563'</li><li>'ZNF564'</li><li>'ZNF57'</li><li>'ZNF575'</li><li>'ZNF578'</li><li>'ZNF579'</li><li>'ZNF585A'</li><li>'ZNF589'</li><li>'ZNF596'</li><li>'ZNF610'</li><li>'ZNF611'</li><li>'ZNF613'</li><li>'ZNF620'</li><li>'ZNF638'</li><li>'ZNF639'</li><li>'ZNF655'</li><li>'ZNF658'</li><li>'ZNF665'</li><li>'ZNF673'</li><li>'ZNF691'</li><li>'ZNF700'</li><li>'ZNF701'</li><li>'ZNF702P'</li><li>'ZNF706'</li><li>'ZNF711'</li><li>'ZNF74'</li><li>'ZNF740'</li><li>'ZNF750'</li><li>'ZNF77'</li><li>'ZNF774'</li><li>'ZNF780A'</li><li>'ZNF789'</li><li>'ZNF791'</li><li>'ZNF808'</li><li>'ZNF833'</li><li>'ZNF860'</li><li>'ZNF880'</li><li>'ZNFX1'</li><li>'ZNRF1'</li><li>'ZNRF3'</li><li>'ZSCAN16'</li><li>'ZSCAN5A'</li><li>'ZSWIM5'</li><li>'ZW10'</li><li>'ZXDB'</li><li>'ZXDC'</li></ol>
+</div>
+</div>
+<div id="cell-11" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="14">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># do lasso cox regression to shrink important genes</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>X <span class="ot">&lt;-</span> <span class="fu">t</span>(gex[uni, <span class="fu">rownames</span>(surv)])</span>
+<span id="cb8-3"><a href="#cb8-3"></a>y <span class="ot">&lt;-</span> <span class="fu">Surv</span>(surv<span class="sc">$</span>PFI_time_1, surv<span class="sc">$</span>PFI_1)</span>
+<span id="cb8-4"><a href="#cb8-4"></a>cv.lasso_cox <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(X, y, <span class="at">family =</span> <span class="st">"cox"</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">nfolds =</span> <span class="dv">5</span>, <span class="at">type.measure=</span><span class="st">"C"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co"># filter important genes</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>coef_lasso <span class="ot">&lt;-</span> <span class="fu">coef</span>(cv.lasso_cox, <span class="at">s =</span> <span class="st">"lambda.min"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8"></a>lasso_genes <span class="ot">&lt;-</span> <span class="fu">rownames</span>(coef_lasso)[<span class="fu">which</span>(coef_lasso[,<span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">0</span>)]</span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="fu">print</span>(lasso_genes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "ABCD1"        "ABCF3"        "ADAMTS9"      "ANKRD32"      "AP3B1"       
+  [6] "AP3S1"        "AP4S1"        "AQP10"        "AQP7P1"       "AQP7P3"      
+ [11] "ATG10"        "C11orf36"     "C14orf53"     "C17orf85"     "C20orf141"   
+ [16] "C2orf54"      "C2orf82"      "C5orf36"      "C5orf43"      "C6orf195"    
+ [21] "C8orf74"      "CDHR5"        "CLRN2"        "CRIM1"        "CT47A10"     
+ [26] "CTNNA2"       "CTNS"         "DEFB123"      "DEFB132"      "DHRS7C"      
+ [31] "DKK1"         "DLEU7"        "DNAJA1"       "DSCAM"        "DYSFIP1"     
+ [36] "EBF2"         "EML6"         "ENOSF1"       "ERLIN1"       "FADD"        
+ [41] "FAM9A"        "FER"          "FGF4"         "FKBP3"        "FLJ40434"    
+ [46] "FLJ44054"     "FLJ46111"     "FUBP1"        "GLDC"         "GRB10"       
+ [51] "GYPB"         "H19"          "H6PD"         "HNRNPA0"      "HOXB4"       
+ [56] "HPX"          "HSD3B2"       "HSF2BP"       "HSPA1L"       "IGSF5"       
+ [61] "INCA1"        "IRS1"         "KCNJ2"        "KCNT1"        "KHDRBS3"     
+ [66] "KHNYN"        "KIAA1919"     "KIF4B"        "KLF10"        "KLK4"        
+ [71] "KSR2"         "LBX2"         "LINGO1"       "LOC100130987" "LOC100131726"
+ [76] "LOC100134868" "LOC360030"    "LOC387647"    "LOC652276"    "LRRC4"       
+ [81] "LRRIQ4"       "LST-3TM12"    "MAGEA8"       "MAPK10"       "METT10D"     
+ [86] "MFSD11"       "MGC34034"     "MRAP"         "MRPL33"       "NANOG"       
+ [91] "NLRP13"       "NLRP8"        "NRG3"         "OPRM1"        "OR2W3"       
+ [96] "PABPC3"       "PAOX"         "PCDHA3"       "PDE10A"       "PHF23"       
+[101] "PLEK2"        "PLXNA4"       "POMT1"        "PPM1B"        "PPP1R15B"    
+[106] "PRSS50"       "RAB41"        "RAD23B"       "RASAL1"       "RBMY1A3P"    
+[111] "RBMY2FP"      "RCN1"         "RPE"          "RPL9"         "SCGB2A2"     
+[116] "SDCBP"        "SHPK"         "SLC16A13"     "SLC26A8"      "SNAR-C4"     
+[121] "SNAR-G1"      "SNORA52"      "SNORD89"      "SPACA3"       "SPANXN4"     
+[126] "SRGAP1"       "SRGAP3"       "STC1"         "STK3"         "SUN5"        
+[131] "TBC1D3P2"     "TBPL2"        "TEX15"        "TFAMP1"       "TM7SF2"      
+[136] "TMED7-TICAM2" "TOR1B"        "TRAPPC9"      "TRIM68"       "TUSC5"       
+[141] "UBTFL1"       "UGT1A8"       "UNCX"         "VPS8"         "WFDC9"       
+[146] "XKR3"         "ZFP42"        "ZG16"         "ZNF160"       "ZNF525"      
+[151] "ZNF611"      </code></pre>
+</div>
+</div>
+<div id="cell-12" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="16">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">write.table</span>(lasso_genes, <span class="st">"../2_metastatic_genes/TCGA_lung_univariate_lasso.txt"</span>, <span class="at">col.names =</span> F, <span class="at">row.names =</span> F, <span class="at">quote =</span> F, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="lusc" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="lusc"><span class="header-section-number">2.3.2</span> LUSC</h3>
+<p>LUSC patients only, univariate cox regression to filter prognostic genes (1917, p &lt; 0.05). Performed lasso-cox regression (a = 1, nfolds = 5) resulting in 97 prognostic genes.</p>
+<div id="cell-14" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="17">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>LUSC <span class="ot">&lt;-</span> surv <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2"></a>    <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"LUSC"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="fu">dim</span>(LUSC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class="list-inline"><li>495</li><li>20519</li></ol>
+</div>
+</div>
+<div id="cell-15" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="18">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="fu">library</span>(foreach)</span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="co"># Set up parallel backend</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a>num_cores <span class="ot">&lt;-</span> <span class="dv">30</span>  <span class="co"># Use all available cores minus one</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(num_cores)</span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="fu">registerDoParallel</span>(cl)</span>
+<span id="cb12-9"><a href="#cb12-9"></a></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co"># Initialize parallel processing</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a>univariate.genes <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">gene =</span> <span class="fu">rownames</span>(gex), <span class="at">.combine =</span> rbind, <span class="at">.packages =</span> <span class="fu">c</span>(<span class="st">"survival"</span>)) <span class="sc">%dopar%</span> {</span>
+<span id="cb12-12"><a href="#cb12-12"></a>    <span class="co"># Create formula dynamically</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a>    formula <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">"PFI ~ `"</span>, gene, <span class="st">"`"</span>))</span>
+<span id="cb12-14"><a href="#cb12-14"></a>    </span>
+<span id="cb12-15"><a href="#cb12-15"></a>    <span class="co"># Fit Cox model</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a>    cox <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">coxph</span>(formula, <span class="at">data =</span> LUSC))</span>
+<span id="cb12-17"><a href="#cb12-17"></a>    </span>
+<span id="cb12-18"><a href="#cb12-18"></a>    <span class="co"># Extract hazard ratio (HR) and p-value</span></span>
+<span id="cb12-19"><a href="#cb12-19"></a>    hr <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(cox<span class="sc">$</span>coef)[[<span class="dv">2</span>]][<span class="dv">1</span>]</span>
+<span id="cb12-20"><a href="#cb12-20"></a>    pvalue <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(cox<span class="sc">$</span>coef)[[<span class="dv">5</span>]][<span class="dv">1</span>]</span>
+<span id="cb12-21"><a href="#cb12-21"></a>    </span>
+<span id="cb12-22"><a href="#cb12-22"></a>    <span class="co"># Return results as a data frame</span></span>
+<span id="cb12-23"><a href="#cb12-23"></a>    <span class="fu">data.frame</span>(<span class="at">gene =</span> gene, <span class="at">hr =</span> hr, <span class="at">pvalue =</span> pvalue)</span>
+<span id="cb12-24"><a href="#cb12-24"></a>}</span>
+<span id="cb12-25"><a href="#cb12-25"></a></span>
+<span id="cb12-26"><a href="#cb12-26"></a><span class="co"># Stop parallel backend</span></span>
+<span id="cb12-27"><a href="#cb12-27"></a><span class="fu">stopCluster</span>(cl)</span>
+<span id="cb12-28"><a href="#cb12-28"></a></span>
+<span id="cb12-29"><a href="#cb12-29"></a><span class="co"># View results</span></span>
+<span id="cb12-30"><a href="#cb12-30"></a><span class="fu">head</span>(univariate.genes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A data.frame: 6 × 3</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">gene</th>
+<th data-quarto-table-cell-role="th" scope="col">hr</th>
+<th data-quarto-table-cell-role="th" scope="col">pvalue</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">1</td>
+<td>A1BG</td>
+<td>0.9488596</td>
+<td>0.60050772</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">2</td>
+<td>A1CF</td>
+<td>0.8108010</td>
+<td>0.57331082</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">3</td>
+<td>A2BP1</td>
+<td>0.9169648</td>
+<td>0.32849577</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">4</td>
+<td>A2LD1</td>
+<td>0.8005384</td>
+<td>0.24910305</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">5</td>
+<td>A2M</td>
+<td>1.0612524</td>
+<td>0.46178884</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">6</td>
+<td>A2ML1</td>
+<td>0.9281850</td>
+<td>0.04752442</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cell-16" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="19">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># filter genes with univariate-cox &lt; 0.05</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>uni <span class="ot">&lt;-</span> univariate.genes<span class="sc">$</span>gene[<span class="fu">which</span>(univariate.genes<span class="sc">$</span>pvalue <span class="sc">&lt;</span> <span class="fl">0.05</span>)]</span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="fu">length</span>(uni)</span>
+<span id="cb13-4"><a href="#cb13-4"></a>uni</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+1917
+</div>
+<div class="cell-output cell-output-display">
+<style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class="list-inline"><li>'A2ML1'</li><li>'AADACL2'</li><li>'ABCA13'</li><li>'ABCA2'</li><li>'ABCA3'</li><li>'ABCB10'</li><li>'ABCC5'</li><li>'ABCD1'</li><li>'ABCF1'</li><li>'ABCG1'</li><li>'ABHD10'</li><li>'ABI2'</li><li>'ABL1'</li><li>'ABL2'</li><li>'ABLIM3'</li><li>'ABP1'</li><li>'ABR'</li><li>'ABTB2'</li><li>'ACN9'</li><li>'ACO2'</li><li>'ACOT11'</li><li>'ACPL2'</li><li>'ACTG1'</li><li>'ACTN1'</li><li>'ADAD2'</li><li>'ADAM21'</li><li>'ADAM21P1'</li><li>'ADAMTS15'</li><li>'ADAMTS17'</li><li>'ADAMTSL4'</li><li>'ADAT1'</li><li>'ADCY2'</li><li>'ADCY7'</li><li>'ADCYAP1R1'</li><li>'ADD1'</li><li>'ADH1C'</li><li>'ADH7'</li><li>'ADI1'</li><li>'ADRA2C'</li><li>'ADSS'</li><li>'ADSSL1'</li><li>'AES'</li><li>'AFF1'</li><li>'AGAP1'</li><li>'AGBL1'</li><li>'AGL'</li><li>'AGPAT2'</li><li>'AGPHD1'</li><li>'AGPS'</li><li>'AIFM2'</li><li>'AIMP2'</li><li>'AJAP1'</li><li>'AK1'</li><li>'AKAP12'</li><li>'AKR1A1'</li><li>'AKR1D1'</li><li>'ALDH3B1'</li><li>'ALDH3B2'</li><li>'ALDH7A1'</li><li>'ALG14'</li><li>'ALKBH2'</li><li>'ALKBH3'</li><li>'ALKBH7'</li><li>'ALPI'</li><li>'ALPK3'</li><li>'ALPP'</li><li>'ALPPL2'</li><li>'ALS2'</li><li>'AMBP'</li><li>'ANAPC13'</li><li>'ANAPC2'</li><li>'ANAPC5'</li><li>'ANGEL2'</li><li>'ANKFY1'</li><li>'ANKRD16'</li><li>'ANKRD27'</li><li>'ANKRD46'</li><li>'ANKRD9'</li><li>'ANKS1B'</li><li>'ANO5'</li><li>'ANTXRL'</li><li>'AP1S3'</li><li>'AP2A2'</li><li>'AP2B1'</li><li>'AP2M1'</li><li>'AP3B2'</li><li>'AP4B1'</li><li>'APBB2'</li><li>'APCDD1L'</li><li>'APOBEC3C'</li><li>'APOD'</li><li>'AQP7P1'</li><li>'AQP7P3'</li><li>'ARC'</li><li>'AREG'</li><li>'ARHGAP24'</li><li>'ARHGAP39'</li><li>'ARHGEF10'</li><li>'ARHGEF17'</li><li>'ARHGEF2'</li><li>'ARHGEF38'</li><li>'ARHGEF4'</li><li>'ARMC9'</li><li>'ARPC5L'</li><li>'ARSG'</li><li>'ARV1'</li><li>'AS3MT'</li><li>'ASAP2'</li><li>'ASB1'</li><li>'ASB6'</li><li>'ASH2L'</li><li>'ASNA1'</li><li>'ASTE1'</li><li>'ASXL1'</li><li>'ASXL2'</li><li>'ATAD1'</li><li>'ATG4D'</li><li>'ATP10A'</li><li>'ATP11A'</li><li>'ATP13A5'</li><li>'ATP1B3'</li><li>'ATP5F1'</li><li>'ATP5G1'</li><li>'ATP5G2'</li><li>'ATP5G3'</li><li>'ATP5L'</li><li>'ATP5O'</li><li>'ATP6AP1'</li><li>'ATP6V1E1'</li><li>'ATP7B'</li><li>'ATP8A1'</li><li>'ATP9A'</li><li>'ATPIF1'</li><li>'ATXN1L'</li><li>'ATXN2'</li><li>'B3GALT5'</li><li>'B3GNT3'</li><li>'B3GNT7'</li><li>'B4GALT5'</li><li>'BAG4'</li><li>'BAHCC1'</li><li>'BAI3'</li><li>'BAP1'</li><li>'BASE'</li><li>'BAT2'</li><li>'BAT2L1'</li><li>'BAZ2A'</li><li>'BAZ2B'</li><li>'BCAR3'</li><li>'BCL11A'</li><li>'BCL2L2'</li><li>'BCORL1'</li><li>'BDH1'</li><li>'BDP1'</li><li>'BHLHE40'</li><li>'BHMT2'</li><li>'BICD1'</li><li>'BID'</li><li>'BIRC6'</li><li>'BLK'</li><li>'BMI1'</li><li>'BMP7'</li><li>'BMPR2'</li><li>'BNC1'</li><li>'BOD1L'</li><li>'BOLA1'</li><li>'BPNT1'</li><li>'BRF2'</li><li>'BRIX1'</li><li>'BRPF1'</li><li>'BRPF3'</li><li>'BRSK2'</li><li>'BSPRY'</li><li>'BTBD2'</li><li>'BTBD3'</li><li>'BTBD8'</li><li>'BTBD9'</li><li>'BTG1'</li><li>'BTLA'</li><li>'BTN1A1'</li><li>'BTN2A1'</li><li>'BZW2'</li><li>'C10orf41'</li><li>'C10orf99'</li><li>'C11orf1'</li><li>'C11orf20'</li><li>'C11orf36'</li><li>'C11orf71'</li><li>'C11orf86'</li><li>'C11orf9'</li><li>'C12orf51'</li><li>'C12orf54'</li><li>'C13orf29'</li><li>'C13orf37'</li><li>'C14orf118'</li><li>'C14orf135'</li><li>'C14orf162'</li><li>'C14orf167'</li><li>'C14orf174'</li><li>'C14orf21'</li><li>⋯</li><li>'TPST2'</li><li>'TRAF2'</li><li>'TRAK2'</li><li>'TRAPPC1'</li><li>'TRAPPC5'</li><li>'TRAPPC9'</li><li>'TREX1'</li><li>'TRIB1'</li><li>'TRIM10'</li><li>'TRIM15'</li><li>'TRIM29'</li><li>'TRIM3'</li><li>'TRIM35'</li><li>'TRIM36'</li><li>'TRIM39'</li><li>'TRIM44'</li><li>'TRIM48'</li><li>'TRIM5'</li><li>'TRIM56'</li><li>'TRIM58'</li><li>'TRIM60'</li><li>'TRIM68'</li><li>'TRIML1'</li><li>'TRIML2'</li><li>'TRIP12'</li><li>'TRMT1'</li><li>'TRMT2A'</li><li>'TRPM6'</li><li>'TRPV4'</li><li>'TRUB1'</li><li>'TSC1'</li><li>'TSNAX'</li><li>'TSR1'</li><li>'TTC23'</li><li>'TTC26'</li><li>'TTC37'</li><li>'TTC7A'</li><li>'TTF1'</li><li>'TTLL11'</li><li>'TTLL4'</li><li>'TTPAL'</li><li>'TUBAL3'</li><li>'TUBB3'</li><li>'TUBD1'</li><li>'TXN2'</li><li>'TXNL4A'</li><li>'TYMS'</li><li>'UBASH3B'</li><li>'UBE2DNL'</li><li>'UBR1'</li><li>'UBR4'</li><li>'UBTFL1'</li><li>'UBXN2B'</li><li>'UBXN6'</li><li>'UCK1'</li><li>'UFD1L'</li><li>'UGGT2'</li><li>'UGT1A6'</li><li>'UGT2A1'</li><li>'UNC119'</li><li>'UNC13D'</li><li>'UNC93B1'</li><li>'UNCX'</li><li>'UQCR10'</li><li>'UQCR11'</li><li>'UQCRC1'</li><li>'UQCRH'</li><li>'USE1'</li><li>'USP17L2'</li><li>'USP32'</li><li>'USP40'</li><li>'USP43'</li><li>'USP47'</li><li>'UTRN'</li><li>'UXT'</li><li>'VAT1'</li><li>'VAV2'</li><li>'VCY'</li><li>'VEGFA'</li><li>'VEZT'</li><li>'VGF'</li><li>'VMAC'</li><li>'VPREB3'</li><li>'VPS13C'</li><li>'VPS37B'</li><li>'VPS53'</li><li>'VSIG10'</li><li>'VWA2'</li><li>'WARS2'</li><li>'WDFY3'</li><li>'WDR31'</li><li>'WDR44'</li><li>'WDR47'</li><li>'WDR77'</li><li>'WDR85'</li><li>'WFDC13'</li><li>'WFDC5'</li><li>'WFS1'</li><li>'WHSC1'</li><li>'WIPF2'</li><li>'WIPI1'</li><li>'WNT1'</li><li>'WNT2B'</li><li>'WNT5A'</li><li>'WNT7A'</li><li>'WSCD1'</li><li>'WSCD2'</li><li>'WWC1'</li><li>'XAGE2'</li><li>'XG'</li><li>'XIAP'</li><li>'XKR7'</li><li>'XRCC6BP1'</li><li>'YBX1'</li><li>'YEATS4'</li><li>'YLPM1'</li><li>'YTHDF1'</li><li>'YY2'</li><li>'ZBTB10'</li><li>'ZBTB26'</li><li>'ZBTB44'</li><li>'ZBTB7C'</li><li>'ZC3H13'</li><li>'ZC3HAV1'</li><li>'ZER1'</li><li>'ZFP28'</li><li>'ZFP42'</li><li>'ZFP92'</li><li>'ZFYVE20'</li><li>'ZFYVE26'</li><li>'ZIC2'</li><li>'ZIM2'</li><li>'ZMYM2'</li><li>'ZMYM6'</li><li>'ZNF142'</li><li>'ZNF160'</li><li>'ZNF165'</li><li>'ZNF174'</li><li>'ZNF192'</li><li>'ZNF235'</li><li>'ZNF239'</li><li>'ZNF24'</li><li>'ZNF256'</li><li>'ZNF268'</li><li>'ZNF273'</li><li>'ZNF274'</li><li>'ZNF28'</li><li>'ZNF281'</li><li>'ZNF32'</li><li>'ZNF329'</li><li>'ZNF330'</li><li>'ZNF331'</li><li>'ZNF350'</li><li>'ZNF354C'</li><li>'ZNF397'</li><li>'ZNF417'</li><li>'ZNF418'</li><li>'ZNF432'</li><li>'ZNF445'</li><li>'ZNF525'</li><li>'ZNF549'</li><li>'ZNF557'</li><li>'ZNF57'</li><li>'ZNF576'</li><li>'ZNF578'</li><li>'ZNF589'</li><li>'ZNF596'</li><li>'ZNF610'</li><li>'ZNF611'</li><li>'ZNF613'</li><li>'ZNF615'</li><li>'ZNF616'</li><li>'ZNF620'</li><li>'ZNF627'</li><li>'ZNF630'</li><li>'ZNF638'</li><li>'ZNF649'</li><li>'ZNF664'</li><li>'ZNF665'</li><li>'ZNF703'</li><li>'ZNF706'</li><li>'ZNF711'</li><li>'ZNF749'</li><li>'ZNF761'</li><li>'ZNF765'</li><li>'ZNF77'</li><li>'ZNF780A'</li><li>'ZNF8'</li><li>'ZNF808'</li><li>'ZNF813'</li><li>'ZNF835'</li><li>'ZNF841'</li><li>'ZNF845'</li><li>'ZNF860'</li><li>'ZNFX1'</li><li>'ZNRF2'</li><li>'ZSCAN22'</li><li>'ZSWIM6'</li><li>'ZSWIM7'</li><li>'ZZEF1'</li></ol>
+</div>
+</div>
+<div id="cell-17" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="20">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># do lasso cox regression to shrink important genes</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>X <span class="ot">&lt;-</span> <span class="fu">t</span>(gex[uni, <span class="fu">rownames</span>(LUSC)])</span>
+<span id="cb14-3"><a href="#cb14-3"></a>y <span class="ot">&lt;-</span> <span class="fu">Surv</span>(LUSC<span class="sc">$</span>PFI_time_1, LUSC<span class="sc">$</span>PFI_1)</span>
+<span id="cb14-4"><a href="#cb14-4"></a>cv.lasso_cox <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(X, y, <span class="at">family =</span> <span class="st">"cox"</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">nfolds =</span> <span class="dv">5</span>, <span class="at">type.measure=</span><span class="st">"C"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5"></a></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co"># filter important genes</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a>coef_lasso <span class="ot">&lt;-</span> <span class="fu">coef</span>(cv.lasso_cox, <span class="at">s =</span> <span class="st">"lambda.min"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8"></a>lasso_genes <span class="ot">&lt;-</span> <span class="fu">rownames</span>(coef_lasso)[<span class="fu">which</span>(coef_lasso[,<span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">0</span>)]</span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="fu">print</span>(lasso_genes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "ABCG1"        "ADRA2C"       "ANTXRL"       "AP1S3"        "ATP6AP1"     
+ [6] "B3GALT5"      "BCL2L2"       "BICD1"        "C14orf135"    "C2orf70"     
+[11] "C8orf74"      "C9orf131"     "CACNA1F"      "CCDC144B"     "CDH4"        
+[16] "CLDN22"       "CLPS"         "CTSL3"        "CTTN"         "CXorf56"     
+[21] "DCD"          "DEFB123"      "DLEU7"        "DNAL1"        "DSG2"        
+[26] "DUSP15"       "FLJ35776"     "FLJ40434"     "FLOT1"        "GALNTL5"     
+[31] "GPR78"        "GSC"          "HCRTR1"       "HOXD12"       "IBTK"        
+[36] "IKBKAP"       "IL3"          "ITGB1BP3"     "KLK8"         "KSR2"        
+[41] "LOC100133545" "LOC127841"    "LOC360030"    "LOC55908"     "LOC728875"   
+[46] "LRRC20"       "MAGEB2"       "MARK3"        "MBOAT2"       "MYEOV"       
+[51] "NKX2-2"       "NPLOC4"       "NR6A1"        "OR2W3"        "OR56A3"      
+[56] "PALM3"        "PCDHA3"       "PCDHGB4"      "PDCL2"        "PDE10A"      
+[61] "PITPNA"       "POMT1"        "PTPRA"        "RBMY1A3P"     "RBMY1E"      
+[66] "RBMY2FP"      "RDH14"        "RECQL"        "RING1"        "RPH3AL"      
+[71] "SCGB2A2"      "SCGBL"        "SERPIND1"     "SHPK"         "SLC22A13"    
+[76] "SMOX"         "SMPX"         "SNORD89"      "SOX9"         "SPANXN3"     
+[81] "SPANXN4"      "SSX1"         "STC2"         "SUN5"         "SYT3"        
+[86] "TBPL2"        "TMEM105"      "TRPM6"        "TYMS"         "UNCX"        
+[91] "USP40"        "VEZT"         "WFDC13"       "ZFP42"        "ZNF350"      
+[96] "ZNF397"       "ZSWIM6"      </code></pre>
+</div>
+</div>
+<div id="cell-18" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="21">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">write.table</span>(lasso_genes, <span class="st">"../2_metastatic_genes/TCGA_LUSC_univariate_lasso.txt"</span>, <span class="at">col.names =</span> F, <span class="at">row.names =</span> F, <span class="at">quote =</span> F, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="luad" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="luad"><span class="header-section-number">2.3.3</span> LUAD</h3>
+<p>LUAD patients only, univariate cox regression to filter prognostic genes (3654, p &lt; 0.05). Performed lasso-cox regression (a = 1, nfolds = 5) resulting in 110 prognostic genes.</p>
+<div id="cell-20" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="22">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>LUAD <span class="ot">&lt;-</span> surv <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2"></a>    <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"LUAD"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="fu">dim</span>(LUAD)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class="list-inline"><li>503</li><li>20519</li></ol>
+</div>
+</div>
+<div id="cell-21" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="23">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="fu">library</span>(foreach)</span>
+<span id="cb18-4"><a href="#cb18-4"></a></span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="co"># Set up parallel backend</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a>num_cores <span class="ot">&lt;-</span> <span class="dv">30</span>  <span class="co"># Use all available cores minus one</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(num_cores)</span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="fu">registerDoParallel</span>(cl)</span>
+<span id="cb18-9"><a href="#cb18-9"></a></span>
+<span id="cb18-10"><a href="#cb18-10"></a><span class="co"># Initialize parallel processing</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a>univariate.genes <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">gene =</span> <span class="fu">rownames</span>(gex), <span class="at">.combine =</span> rbind, <span class="at">.packages =</span> <span class="fu">c</span>(<span class="st">"survival"</span>)) <span class="sc">%dopar%</span> {</span>
+<span id="cb18-12"><a href="#cb18-12"></a>    <span class="co"># Create formula dynamically</span></span>
+<span id="cb18-13"><a href="#cb18-13"></a>    formula <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">"PFI ~ `"</span>, gene, <span class="st">"`"</span>))</span>
+<span id="cb18-14"><a href="#cb18-14"></a>    </span>
+<span id="cb18-15"><a href="#cb18-15"></a>    <span class="co"># Fit Cox model</span></span>
+<span id="cb18-16"><a href="#cb18-16"></a>    cox <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">coxph</span>(formula, <span class="at">data =</span> LUAD))</span>
+<span id="cb18-17"><a href="#cb18-17"></a>    </span>
+<span id="cb18-18"><a href="#cb18-18"></a>    <span class="co"># Extract hazard ratio (HR) and p-value</span></span>
+<span id="cb18-19"><a href="#cb18-19"></a>    hr <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(cox<span class="sc">$</span>coef)[[<span class="dv">2</span>]][<span class="dv">1</span>]</span>
+<span id="cb18-20"><a href="#cb18-20"></a>    pvalue <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(cox<span class="sc">$</span>coef)[[<span class="dv">5</span>]][<span class="dv">1</span>]</span>
+<span id="cb18-21"><a href="#cb18-21"></a>    </span>
+<span id="cb18-22"><a href="#cb18-22"></a>    <span class="co"># Return results as a data frame</span></span>
+<span id="cb18-23"><a href="#cb18-23"></a>    <span class="fu">data.frame</span>(<span class="at">gene =</span> gene, <span class="at">hr =</span> hr, <span class="at">pvalue =</span> pvalue)</span>
+<span id="cb18-24"><a href="#cb18-24"></a>}</span>
+<span id="cb18-25"><a href="#cb18-25"></a></span>
+<span id="cb18-26"><a href="#cb18-26"></a><span class="co"># Stop parallel backend</span></span>
+<span id="cb18-27"><a href="#cb18-27"></a><span class="fu">stopCluster</span>(cl)</span>
+<span id="cb18-28"><a href="#cb18-28"></a></span>
+<span id="cb18-29"><a href="#cb18-29"></a><span class="co"># View results</span></span>
+<span id="cb18-30"><a href="#cb18-30"></a><span class="fu">head</span>(univariate.genes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A data.frame: 6 × 3</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">gene</th>
+<th data-quarto-table-cell-role="th" scope="col">hr</th>
+<th data-quarto-table-cell-role="th" scope="col">pvalue</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">1</td>
+<td>A1BG</td>
+<td>0.9185667</td>
+<td>0.257531683</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">2</td>
+<td>A1CF</td>
+<td>1.0252673</td>
+<td>0.731421619</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">3</td>
+<td>A2BP1</td>
+<td>0.9678568</td>
+<td>0.577254467</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">4</td>
+<td>A2LD1</td>
+<td>1.5394511</td>
+<td>0.005534639</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">5</td>
+<td>A2M</td>
+<td>0.8168842</td>
+<td>0.012737910</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">6</td>
+<td>A2ML1</td>
+<td>1.1104490</td>
+<td>0.007959814</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cell-22" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="24">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># filter genes with univariate-cox &lt; 0.05</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>uni <span class="ot">&lt;-</span> univariate.genes<span class="sc">$</span>gene[<span class="fu">which</span>(univariate.genes<span class="sc">$</span>pvalue <span class="sc">&lt;</span> <span class="fl">0.05</span>)]</span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="fu">length</span>(uni)</span>
+<span id="cb19-4"><a href="#cb19-4"></a>uni</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+3654
+</div>
+<div class="cell-output cell-output-display">
+<style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class="list-inline"><li>'A2LD1'</li><li>'A2M'</li><li>'A2ML1'</li><li>'ABAT'</li><li>'ABCA10'</li><li>'ABCA13'</li><li>'ABCA3'</li><li>'ABCA8'</li><li>'ABCC11'</li><li>'ABCC12'</li><li>'ABCC4'</li><li>'ABCC6'</li><li>'ABCC6P1'</li><li>'ABCC6P2'</li><li>'ABCC8'</li><li>'ABHD14B'</li><li>'ABHD6'</li><li>'ABI3'</li><li>'ABI3BP'</li><li>'ABR'</li><li>'ABTB1'</li><li>'ACAD8'</li><li>'ACADS'</li><li>'ACADSB'</li><li>'ACAN'</li><li>'ACAP1'</li><li>'ACAT1'</li><li>'ACBD4'</li><li>'ACCN4'</li><li>'ACCS'</li><li>'ACCSL'</li><li>'ACE'</li><li>'ACHE'</li><li>'ACOT12'</li><li>'ACOXL'</li><li>'ACP1'</li><li>'ACP5'</li><li>'ACPL2'</li><li>'ACPP'</li><li>'ACRBP'</li><li>'ACRV1'</li><li>'ACSBG1'</li><li>'ACSF3'</li><li>'ACSL3'</li><li>'ACSL5'</li><li>'ACSM3'</li><li>'ACSM5'</li><li>'ACSS1'</li><li>'ACTB'</li><li>'ACTL6A'</li><li>'ACTN1'</li><li>'ACTN4'</li><li>'ACTR2'</li><li>'ACTR3'</li><li>'ACVRL1'</li><li>'ADA'</li><li>'ADAM10'</li><li>'ADAM12'</li><li>'ADAM5P'</li><li>'ADAM6'</li><li>'ADAMTS17'</li><li>'ADAMTS20'</li><li>'ADAMTS4'</li><li>'ADAMTS6'</li><li>'ADAMTS8'</li><li>'ADAMTSL2'</li><li>'ADC'</li><li>'ADCY4'</li><li>'ADCY6'</li><li>'ADCY9'</li><li>'ADCYAP1R1'</li><li>'ADH1A'</li><li>'ADH1B'</li><li>'ADH7'</li><li>'ADHFE1'</li><li>'ADIPOQ'</li><li>'ADIPOR2'</li><li>'ADM'</li><li>'ADORA2A'</li><li>'ADRB2'</li><li>'AGAP11'</li><li>'AGAP2'</li><li>'AGAP3'</li><li>'AGAP4'</li><li>'AGAP5'</li><li>'AGAP7'</li><li>'AGBL2'</li><li>'AGER'</li><li>'AGFG1'</li><li>'AGFG2'</li><li>'AGMAT'</li><li>'AGPAT5'</li><li>'AGPS'</li><li>'AHNAK2'</li><li>'AHRR'</li><li>'AHSA1'</li><li>'AHSG'</li><li>'AIFM3'</li><li>'AIMP2'</li><li>'AK1'</li><li>'AK2'</li><li>'AKAP1'</li><li>'AKAP12'</li><li>'AKAP13'</li><li>'AKAP14'</li><li>'AKAP3'</li><li>'AKD1'</li><li>'AKNA'</li><li>'AKT2'</li><li>'ALDH2'</li><li>'ALDH4A1'</li><li>'ALDOA'</li><li>'ALG10'</li><li>'ALG3'</li><li>'ALG8'</li><li>'ALK'</li><li>'ALOX15'</li><li>'ALOX5'</li><li>'ALOXE3'</li><li>'ALPI'</li><li>'ALPL'</li><li>'ALS2CR12'</li><li>'ALX1'</li><li>'AMBP'</li><li>'AMDHD1'</li><li>'AMICA1'</li><li>'AMPD1'</li><li>'AMT'</li><li>'ANGPTL4'</li><li>'ANGPTL5'</li><li>'ANGPTL6'</li><li>'ANK2'</li><li>'ANKHD1'</li><li>'ANKK1'</li><li>'ANKMY1'</li><li>'ANKRD13A'</li><li>'ANKRD20A3'</li><li>'ANKRD32'</li><li>'ANKRD44'</li><li>'ANKRD55'</li><li>'ANKRD57'</li><li>'ANKRD6'</li><li>'ANLN'</li><li>'ANO10'</li><li>'ANO2'</li><li>'ANO9'</li><li>'ANP32A'</li><li>'ANP32B'</li><li>'ANP32E'</li><li>'ANXA2P1'</li><li>'AOX2P'</li><li>'AP1S3'</li><li>'AP2A1'</li><li>'AP2M1'</li><li>'AP2S1'</li><li>'AP3B1'</li><li>'AP3S1'</li><li>'APCDD1L'</li><li>'APLP2'</li><li>'APOB48R'</li><li>'APOBEC1'</li><li>'APOBEC3A'</li><li>'APOBEC3H'</li><li>'APOBEC4'</li><li>'APOC4'</li><li>'APOH'</li><li>'AQP3'</li><li>'AQP4'</li><li>'AQP5'</li><li>'AQP7'</li><li>'ARAP1'</li><li>'ARFGAP2'</li><li>'ARHGAP11A'</li><li>'ARHGAP11B'</li><li>'ARHGAP15'</li><li>'ARHGAP24'</li><li>'ARHGAP25'</li><li>'ARHGAP27'</li><li>'ARHGAP30'</li><li>'ARHGAP9'</li><li>'ARHGDIB'</li><li>'ARHGEF15'</li><li>'ARHGEF17'</li><li>'ARHGEF2'</li><li>'ARHGEF3'</li><li>'ARHGEF37'</li><li>'ARHGEF38'</li><li>'ARHGEF6'</li><li>'ARID3A'</li><li>'ARIH2'</li><li>'ARL6IP1'</li><li>'ARL6IP6'</li><li>'ARMC5'</li><li>'ARNTL2'</li><li>'ARPM1'</li><li>'ARRB1'</li><li>'ARRB2'</li><li>'ARVCF'</li><li>'ASAH2'</li><li>'ASAP3'</li><li>⋯</li><li>'WDR59'</li><li>'WDR5B'</li><li>'WDR6'</li><li>'WDR62'</li><li>'WDR67'</li><li>'WDR75'</li><li>'WDR76'</li><li>'WDR83'</li><li>'WDR87'</li><li>'WDR91'</li><li>'WDR93'</li><li>'WDTC1'</li><li>'WFDC13'</li><li>'WFDC6'</li><li>'WFIKKN2'</li><li>'WIF1'</li><li>'WIPI2'</li><li>'WIT1'</li><li>'WLS'</li><li>'WNT2B'</li><li>'WNT3A'</li><li>'WSCD2'</li><li>'WWP2'</li><li>'XBP1'</li><li>'XCR1'</li><li>'XPO1'</li><li>'XRCC2'</li><li>'XRCC4'</li><li>'XRCC5'</li><li>'YARS2'</li><li>'YEATS4'</li><li>'YES1'</li><li>'YKT6'</li><li>'YPEL1'</li><li>'YSK4'</li><li>'YWHAG'</li><li>'YWHAQ'</li><li>'YWHAZ'</li><li>'YY1'</li><li>'ZAP70'</li><li>'ZBED5'</li><li>'ZBTB3'</li><li>'ZBTB32'</li><li>'ZBTB40'</li><li>'ZBTB46'</li><li>'ZBTB48'</li><li>'ZBTB5'</li><li>'ZBTB7C'</li><li>'ZC3H12D'</li><li>'ZC3H15'</li><li>'ZCCHC24'</li><li>'ZCWPW1'</li><li>'ZDHHC1'</li><li>'ZDHHC11'</li><li>'ZER1'</li><li>'ZFAND2A'</li><li>'ZFAND2B'</li><li>'ZFP2'</li><li>'ZFP28'</li><li>'ZFP3'</li><li>'ZFP90'</li><li>'ZFR2'</li><li>'ZFYVE27'</li><li>'ZG16'</li><li>'ZMYM6'</li><li>'ZMYND10'</li><li>'ZMYND12'</li><li>'ZMYND15'</li><li>'ZNF10'</li><li>'ZNF100'</li><li>'ZNF136'</li><li>'ZNF14'</li><li>'ZNF140'</li><li>'ZNF141'</li><li>'ZNF146'</li><li>'ZNF154'</li><li>'ZNF16'</li><li>'ZNF165'</li><li>'ZNF17'</li><li>'ZNF175'</li><li>'ZNF185'</li><li>'ZNF187'</li><li>'ZNF19'</li><li>'ZNF20'</li><li>'ZNF204P'</li><li>'ZNF207'</li><li>'ZNF211'</li><li>'ZNF238'</li><li>'ZNF24'</li><li>'ZNF248'</li><li>'ZNF25'</li><li>'ZNF250'</li><li>'ZNF253'</li><li>'ZNF257'</li><li>'ZNF266'</li><li>'ZNF271'</li><li>'ZNF276'</li><li>'ZNF281'</li><li>'ZNF3'</li><li>'ZNF304'</li><li>'ZNF322A'</li><li>'ZNF322B'</li><li>'ZNF323'</li><li>'ZNF333'</li><li>'ZNF337'</li><li>'ZNF345'</li><li>'ZNF347'</li><li>'ZNF362'</li><li>'ZNF37B'</li><li>'ZNF394'</li><li>'ZNF396'</li><li>'ZNF397'</li><li>'ZNF397OS'</li><li>'ZNF404'</li><li>'ZNF429'</li><li>'ZNF43'</li><li>'ZNF431'</li><li>'ZNF433'</li><li>'ZNF439'</li><li>'ZNF44'</li><li>'ZNF440'</li><li>'ZNF441'</li><li>'ZNF442'</li><li>'ZNF443'</li><li>'ZNF451'</li><li>'ZNF470'</li><li>'ZNF471'</li><li>'ZNF483'</li><li>'ZNF486'</li><li>'ZNF490'</li><li>'ZNF491'</li><li>'ZNF493'</li><li>'ZNF497'</li><li>'ZNF502'</li><li>'ZNF506'</li><li>'ZNF512'</li><li>'ZNF512B'</li><li>'ZNF526'</li><li>'ZNF536'</li><li>'ZNF540'</li><li>'ZNF541'</li><li>'ZNF546'</li><li>'ZNF547'</li><li>'ZNF548'</li><li>'ZNF549'</li><li>'ZNF563'</li><li>'ZNF564'</li><li>'ZNF574'</li><li>'ZNF576'</li><li>'ZNF577'</li><li>'ZNF582'</li><li>'ZNF589'</li><li>'ZNF596'</li><li>'ZNF608'</li><li>'ZNF626'</li><li>'ZNF655'</li><li>'ZNF658'</li><li>'ZNF671'</li><li>'ZNF677'</li><li>'ZNF680'</li><li>'ZNF682'</li><li>'ZNF69'</li><li>'ZNF691'</li><li>'ZNF700'</li><li>'ZNF703'</li><li>'ZNF704'</li><li>'ZNF708'</li><li>'ZNF709'</li><li>'ZNF71'</li><li>'ZNF721'</li><li>'ZNF727'</li><li>'ZNF732'</li><li>'ZNF737'</li><li>'ZNF750'</li><li>'ZNF763'</li><li>'ZNF77'</li><li>'ZNF773'</li><li>'ZNF778'</li><li>'ZNF781'</li><li>'ZNF782'</li><li>'ZNF789'</li><li>'ZNF799'</li><li>'ZNF80'</li><li>'ZNF831'</li><li>'ZNF835'</li><li>'ZNF836'</li><li>'ZNF844'</li><li>'ZNF85'</li><li>'ZNF862'</li><li>'ZNF876P'</li><li>'ZNF879'</li><li>'ZNF91'</li><li>'ZNRF3'</li><li>'ZSCAN1'</li><li>'ZSCAN18'</li><li>'ZSCAN4'</li><li>'ZSWIM7'</li><li>'ZWILCH'</li><li>'ZWINT'</li><li>'ZXDC'</li></ol>
+</div>
+</div>
+<div id="cell-23" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="25">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># do lasso cox regression to shrink important genes</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>X <span class="ot">&lt;-</span> <span class="fu">t</span>(gex[uni, <span class="fu">rownames</span>(LUAD)])</span>
+<span id="cb20-3"><a href="#cb20-3"></a>y <span class="ot">&lt;-</span> <span class="fu">Surv</span>(LUAD<span class="sc">$</span>PFI_time_1, LUAD<span class="sc">$</span>PFI_1)</span>
+<span id="cb20-4"><a href="#cb20-4"></a>cv.lasso_cox <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(X, y, <span class="at">family =</span> <span class="st">"cox"</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">nfolds =</span> <span class="dv">5</span>, <span class="at">type.measure=</span><span class="st">"C"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5"></a></span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="co"># filter important genes</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a>coef_lasso <span class="ot">&lt;-</span> <span class="fu">coef</span>(cv.lasso_cox, <span class="at">s =</span> <span class="st">"lambda.min"</span>)</span>
+<span id="cb20-8"><a href="#cb20-8"></a>lasso_genes <span class="ot">&lt;-</span> <span class="fu">rownames</span>(coef_lasso)[<span class="fu">which</span>(coef_lasso[,<span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">0</span>)]</span>
+<span id="cb20-9"><a href="#cb20-9"></a><span class="fu">print</span>(lasso_genes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "ACOT12"       "ACOXL"        "ADAM5P"       "ARPM1"        "ATG10"       
+  [6] "B3GALTL"      "BANP"         "C14orf145"    "C18orf2"      "C1orf94"     
+ [11] "C6orf195"     "C7orf28A"     "CCDC126"      "CRCT1"        "CUL4A"       
+ [16] "DAB1"         "DAOA"         "DGKK"         "DHRS7C"       "DISC2"       
+ [21] "DKK1"         "DLX1"         "DNAJC1"       "EFNB2"        "ELOVL7"      
+ [26] "FANCL"        "FGF6"         "FNDC4"        "FTSJ2"        "FUNDC2P2"    
+ [31] "GAL3ST3"      "GCKR"         "GDPD2"        "GLRA4"        "GNGT1"       
+ [36] "GOPC"         "GPX5"         "GRAMD1B"      "HGSNAT"       "HIST1H2AL"   
+ [41] "HIST1H3I"     "HPX"          "HSPA6"        "INSL4"        "KCNA7"       
+ [46] "KCNK2"        "KRT34"        "LDLRAD3"      "LINGO1"       "LIPK"        
+ [51] "LOC100192426" "LOC148189"    "LOC653544"    "LOC728410"    "LRRC36"      
+ [56] "LRRIQ4"       "MGC4473"      "MMP8"         "NCSTN"        "NLRP10"      
+ [61] "NLRP13"       "NR5A1"        "NTSR1"        "OPRM1"        "OR10A5"      
+ [66] "OR10K1"       "OR10X1"       "OR2F2"        "OR4D11"       "OR51T1"      
+ [71] "OR5AC2"       "OR6Y1"        "OR7G1"        "OR7G2"        "OR8B12"      
+ [76] "OR8B2"        "PABPC3"       "PARP1"        "PBX1"         "PDE7A"       
+ [81] "PHKA1"        "PION"         "PITX3"        "PNPLA7"       "PRICKLE4"    
+ [86] "RGS2"         "RILPL2"       "SAMD13"       "SAMD7"        "SCARNA14"    
+ [91] "SCG5"         "SLC16A11"     "SLC16A13"     "SNORA5A"      "SNORA6"      
+ [96] "SNORA78"      "SNORD22"      "SPANXN4"      "ST7OT4"       "TMEM106B"    
+[101] "TMEM44"       "TMEM64"       "TRIM6"        "TSPY4"        "TTC9"        
+[106] "TUSC5"        "UBTFL1"       "WIPI2"        "ZG16"         "ZNF574"      </code></pre>
+</div>
+</div>
+<div id="cell-24" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="26">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">write.table</span>(lasso_genes, <span class="st">"../2_metastatic_genes/TCGA_LUAD_univariate_lasso.txt"</span>, <span class="at">col.names =</span> F, <span class="at">row.names =</span> F, <span class="at">quote =</span> F, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="**Introduction**">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><strong>Introduction</strong></span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./ssgsea2.html" class="pagination-link" aria-label="Risk Classification with ssGSEA">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Risk Classification with ssGSEA</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.dev/FrancisCrickInstitute/blob/main/metastatic_signature2.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
